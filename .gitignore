@@ -1,6 +1,6 @@
 # Godot-specific ignores.
-game/.import/
-game/.godot/
+.import/
+.godot/
 export.cfg
 export_presets.cfg
 
@@ -11,14 +11,5 @@ export_presets.cfg
 .mono/
 data_*/
 
-# Godot engine.
-engine/
-
-# File extensions and stuff.
-.vs
-.sln
-.vcxproj
-.vcxproj.filters
-.vcxproj.user
-modules/summator/*.obj
-modules/summator/__pycache__
+# Rider stuff.
+.idea
