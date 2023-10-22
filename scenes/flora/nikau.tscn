@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://12bx43nfleo8"]
+
+[ext_resource type="ArrayMesh" uid="uid://cxg21ydocvx0t" path="res://data/meshes/natives_nikau.res" id="1_78xtl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6qqr8"]
+size = Vector3(0.4, 6, 0.4)
+
+[node name="PhysicsBody" type="StaticBody3D"]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape1" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+shape = SubResource("BoxShape3D_6qqr8")
+
+[node name="MeshInstance" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_78xtl")

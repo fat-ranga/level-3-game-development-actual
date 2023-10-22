@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://s0gnycogpfs0"]
+[gd_scene load_steps=4 format=3 uid="uid://s0gnycogpfs0"]
 
 [ext_resource type="Script" path="res://source/player.gd" id="1_hb35k"]
+[ext_resource type="AudioStream" uid="uid://5buecktduga4" path="res://data/audio/46-tui-morning-chorus.mp3" id="2_51e1f"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bcag7"]
 size = Vector3(0.6, 1.8, 0.6)
 
 [node name="Player" type="CharacterBody3D"]
+collision_mask = 9
 wall_min_slide_angle = 0.0
 script = ExtResource("1_hb35k")
 
@@ -23,3 +25,8 @@ current = true
 fov = 90.0
 
 [node name="VoxelViewer" type="VoxelViewer" parent="CameraBase/Camera"]
+view_distance = 512
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_51e1f")
+autoplay = true

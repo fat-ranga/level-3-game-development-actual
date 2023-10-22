@@ -1,12 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://d2eqichq2s0vl"]
+[gd_scene load_steps=22 format=3 uid="uid://d2eqichq2s0vl"]
 
 [ext_resource type="Script" path="res://source/world.gd" id="1_whit5"]
+[ext_resource type="ArrayMesh" uid="uid://cxg21ydocvx0t" path="res://data/meshes/natives_nikau.res" id="2_i4ajs"]
 [ext_resource type="PackedScene" uid="uid://s0gnycogpfs0" path="res://scenes/player.tscn" id="2_iw4mw"]
+[ext_resource type="ArrayMesh" uid="uid://bodhwux60hu67" path="res://data/meshes/natives_silver_fern.res" id="3_74fwo"]
+[ext_resource type="PackedScene" uid="uid://12bx43nfleo8" path="res://scenes/flora/nikau.tscn" id="3_p6bu4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_uxvhl"]
-sky_top_color = Color(0.184314, 0.360784, 0.639216, 1)
-sky_horizon_color = Color(0.576471, 0.662745, 0.768627, 1)
-ground_horizon_color = Color(0.576471, 0.662745, 0.768627, 1)
+sky_top_color = Color(0.168627, 0.337255, 0.603922, 1)
+sky_horizon_color = Color(0.643137, 0.72549, 0.858824, 1)
+ground_horizon_color = Color(0.643137, 0.72549, 0.858824, 1)
 ground_curve = 0.0246229
 
 [sub_resource type="Sky" id="Sky_xwj0m"]
@@ -19,8 +22,14 @@ tonemap_mode = 2
 glow_enabled = true
 fog_enabled = true
 fog_light_color = Color(0.380392, 0.588235, 1, 1)
-fog_density = 0.001
+fog_density = 0.0005
 fog_sky_affect = 0.0
+volumetric_fog_density = 0.01
+volumetric_fog_sky_affect = 0.0
+
+[sub_resource type="Curve" id="Curve_blil8"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.54902, 0.473684), -4.00667, -4.00667, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_fihqn"]
 frequency = 0.004
@@ -30,10 +39,18 @@ channel = 0
 height_start = 0.0
 height_range = 64.0
 noise = SubResource("FastNoiseLite_fihqn")
+curve = SubResource("Curve_blil8")
 
 [sub_resource type="VoxelBlockyModelEmpty" id="VoxelBlockyModelEmpty_04pu4"]
 
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_4npgl"]
+atlas_size_in_tiles = Vector2i(8, 8)
+tile_left = Vector2i(0, 1)
+tile_right = Vector2i(0, 1)
+tile_bottom = Vector2i(7, 0)
+tile_top = Vector2i(3, 1)
+tile_back = Vector2i(0, 1)
+tile_front = Vector2i(0, 1)
 
 [sub_resource type="VoxelBlockyLibrary" id="VoxelBlockyLibrary_ufhj1"]
 models = Array[VoxelBlockyModel]([SubResource("VoxelBlockyModelEmpty_04pu4"), SubResource("VoxelBlockyModelCube_4npgl"), null])
@@ -42,7 +59,29 @@ models = Array[VoxelBlockyModel]([SubResource("VoxelBlockyModelEmpty_04pu4"), Su
 library = SubResource("VoxelBlockyLibrary_ufhj1")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_as4ia"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
 vertex_color_use_as_albedo = true
+
+[sub_resource type="VoxelInstanceGenerator" id="VoxelInstanceGenerator_s1nar"]
+density = 0.003
+
+[sub_resource type="VoxelInstanceLibraryMultiMeshItem" id="VoxelInstanceLibraryMultiMeshItem_fbwsw"]
+generator = SubResource("VoxelInstanceGenerator_s1nar")
+scene = ExtResource("3_p6bu4")
+mesh = ExtResource("2_i4ajs")
+
+[sub_resource type="VoxelInstanceGenerator" id="VoxelInstanceGenerator_4gq4g"]
+density = 0.04
+
+[sub_resource type="VoxelInstanceLibraryMultiMeshItem" id="VoxelInstanceLibraryMultiMeshItem_r4qq7"]
+generator = SubResource("VoxelInstanceGenerator_4gq4g")
+mesh = ExtResource("3_74fwo")
+
+[sub_resource type="VoxelInstanceLibrary" id="VoxelInstanceLibrary_qrji1"]
+item_1 = SubResource("VoxelInstanceLibraryMultiMeshItem_fbwsw")
+item_2 = SubResource("VoxelInstanceLibraryMultiMeshItem_r4qq7")
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_whit5")
@@ -51,7 +90,7 @@ script = ExtResource("1_whit5")
 environment = SubResource("Environment_tm0cj")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866024, -0.433016, 0.250001, -0.345051, 0.87943, 0.327936, -0.36186, 0.197737, -0.91102, 0, 0, 0)
+transform = Transform3D(-0.866024, -0.433015, 0.250001, -0.0139859, 0.520783, 0.853575, -0.499807, 0.73572, -0.457066, 0, 49.2253, 0)
 shadow_enabled = true
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="."]
@@ -62,6 +101,9 @@ max_view_distance = 256
 collision_mask = 7
 material_override = SubResource("StandardMaterial3D_as4ia")
 mesh_block_size = 32
+
+[node name="VoxelInstancer" type="VoxelInstancer" parent="VoxelTerrain"]
+library = SubResource("VoxelInstanceLibrary_qrji1")
 
 [node name="Player" parent="." instance=ExtResource("2_iw4mw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 55.4014, 0)

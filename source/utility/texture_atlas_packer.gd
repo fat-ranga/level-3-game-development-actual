@@ -2,11 +2,14 @@ extends Node
 
 class_name TextureAtlasPacker
 
+# Data returned by generate_texture_atlas_data function.
+enum DataType {TEXTURE, TEXTURE_IDS, ATLAS_SIZE_IN_TILES}
+
 var texture_ids: Dictionary
 var texture_atlas_size_in_pixels: int = Constants.TEXTURE_SIZE # Calculated based on the number of textures imported.
 var atlas_size_in_blocks: int
 
-func generate_texture_atlas(root_directory: String = Constants.TEXTURE_DIRECTORY) -> ImageTexture:
+func generate_texture_atlas_data(root_directory: String = Constants.TEXTURE_DIRECTORY) -> Array:
 	var texture_paths: PackedStringArray = _get_texture_paths_in_directory(root_directory)
 	var textures: Array = _load_textures(texture_paths)
 	var atlas_image: Image = _pack_atlas(textures)
@@ -14,8 +17,13 @@ func generate_texture_atlas(root_directory: String = Constants.TEXTURE_DIRECTORY
 	var texture_atlas: ImageTexture = ImageTexture.create_from_image(atlas_image)
 	
 	atlas_image.save_png(Constants.DIRECTORY_LOCAL_EXECUTABLE + "atlas_frfr.png")
+	print("stuff au")
+	print(texture_ids)
+	print(texture_atlas_size_in_pixels)
+	print(atlas_size_in_blocks)
 	
-	return texture_atlas
+	# Corresponds to the DataType enum.
+	return [texture_atlas, texture_ids, Vector2(atlas_size_in_blocks, atlas_size_in_blocks)]
 
 func _load_textures(paths: PackedStringArray) -> Array:
 	var image_array: Array
