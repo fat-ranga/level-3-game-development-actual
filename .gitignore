@@ -13,3 +13,7 @@ data_*/
 
 # Rider stuff.
 .idea
+
+# Zylann voxel region data.
+*.vxr
+*.vxrm

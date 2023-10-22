@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://s0gnycogpfs0"]
+
+[ext_resource type="Script" path="res://source/player.gd" id="1_hb35k"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bcag7"]
+size = Vector3(0.6, 1.8, 0.6)
+
+[node name="Player" type="CharacterBody3D"]
+wall_min_slide_angle = 0.0
+script = ExtResource("1_hb35k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("BoxShape3D_bcag7")
+
+[node name="CameraBase" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+top_level = true
+
+[node name="Camera" type="Camera3D" parent="CameraBase"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22, 0)
+current = true
+fov = 90.0
+
+[node name="VoxelViewer" type="VoxelViewer" parent="CameraBase/Camera"]

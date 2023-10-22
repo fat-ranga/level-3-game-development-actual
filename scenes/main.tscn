@@ -1,9 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://5eoiscevlbw1"]
+[gd_scene load_steps=4 format=3 uid="uid://5eoiscevlbw1"]
 
 [ext_resource type="Script" path="res://source/main.gd" id="1_4iu4q"]
-[ext_resource type="PackedScene" uid="uid://d2eqichq2s0vl" path="res://scenes/world.tscn" id="2_v45fc"]
+[ext_resource type="PackedScene" uid="uid://ct4a2mphhsued" path="res://scenes/ui/main_menu.tscn" id="2_c1qpv"]
+[ext_resource type="Script" path="res://source/utility/texture_atlas_packer.gd" id="3_qrw1f"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_4iu4q")
 
-[node name="World" parent="." instance=ExtResource("2_v45fc")]
+[node name="MainMenu" parent="." instance=ExtResource("2_c1qpv")]
+
+[node name="TextureAtlasPacker" type="Node" parent="."]
+script = ExtResource("3_qrw1f")

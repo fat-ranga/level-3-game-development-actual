@@ -1,5 +1,60 @@
-[gd_scene format=3 uid="uid://ct4a2mphhsued"]
+[gd_scene load_steps=5 format=3 uid="uid://ct4a2mphhsued"]
 
-[node name="MainMenu" type="Control"]
-layout_mode = 3
-anchors_preset = 0
+[ext_resource type="Texture2D" uid="uid://b8re1okv7b0q0" path="res://data/textures/ui/background.png" id="1_on45o"]
+[ext_resource type="Theme" uid="uid://1c1e156uchg8" path="res://data/theme/kiwicraft_theme.tres" id="1_owtia"]
+[ext_resource type="Texture2D" uid="uid://dfw17wplxhfp" path="res://data/textures/ui/kiwicraft.png" id="2_3wa63"]
+[ext_resource type="Script" path="res://source/ui/main_menu.gd" id="2_8y16x"]
+
+[node name="MainMenu" type="MarginContainer"]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_owtia")
+script = ExtResource("2_8y16x")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_on45o")
+expand_mode = 2
+
+[node name="Title" type="TextureRect" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("2_3wa63")
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 1
+
+[node name="Singleplayer" type="Button" parent="Buttons"]
+layout_mode = 2
+text = "Singleplayer"
+
+[node name="Settings" type="Button" parent="Buttons"]
+layout_mode = 2
+text = "Settings"
+
+[node name="Exit" type="Button" parent="Buttons"]
+layout_mode = 2
+text = "Exit"
+
+[node name="SettingsMenu" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Back" type="Button" parent="SettingsMenu"]
+layout_mode = 2
+text = "Back"
+
+[connection signal="pressed" from="Buttons/Singleplayer" to="." method="_on_singleplayer_pressed"]
+[connection signal="pressed" from="Buttons/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Buttons/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="SettingsMenu/Back" to="." method="_on_back_pressed"]
