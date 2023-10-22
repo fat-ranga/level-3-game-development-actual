@@ -23,7 +23,7 @@ func generate_texture_atlas_data(root_directory: String = Constants.TEXTURE_DIRE
 	print(atlas_size_in_blocks)
 	
 	# Corresponds to the DataType enum.
-	return [texture_atlas, texture_ids, Vector2(atlas_size_in_blocks, atlas_size_in_blocks)]
+	return [texture_atlas, texture_ids, Vector2i(atlas_size_in_blocks, atlas_size_in_blocks)]
 
 func _load_textures(paths: PackedStringArray) -> Array:
 	var image_array: Array

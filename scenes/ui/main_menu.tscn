@@ -1,9 +1,32 @@
-[gd_scene load_steps=5 format=3 uid="uid://ct4a2mphhsued"]
+[gd_scene load_steps=11 format=3 uid="uid://ct4a2mphhsued"]
 
 [ext_resource type="Texture2D" uid="uid://b8re1okv7b0q0" path="res://data/textures/ui/background.png" id="1_on45o"]
 [ext_resource type="Theme" uid="uid://1c1e156uchg8" path="res://data/theme/kiwicraft_theme.tres" id="1_owtia"]
 [ext_resource type="Texture2D" uid="uid://dfw17wplxhfp" path="res://data/textures/ui/kiwicraft.png" id="2_3wa63"]
 [ext_resource type="Script" path="res://source/ui/main_menu.gd" id="2_8y16x"]
+[ext_resource type="Texture2D" uid="uid://bmcvk7udp83yu" path="res://data/textures/atlas/black_sand.png" id="5_8xpyi"]
+[ext_resource type="Texture2D" uid="uid://ckh4k2moahupt" path="res://data/textures/atlas/planks.png" id="5_qxgdh"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bbo4o"]
+line_spacing = 0.0
+font_size = 32
+shadow_size = 4
+shadow_color = Color(0.219608, 0.219608, 0.219608, 1)
+
+[sub_resource type="Gradient" id="Gradient_m2bu4"]
+colors = PackedColorArray(0, 0, 0, 0.443137, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fflw7"]
+gradient = SubResource("Gradient_m2bu4")
+width = 16
+height = 16
+fill_to = Vector2(0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_uch8p"]
+gradient = SubResource("Gradient_m2bu4")
+width = 16
+height = 16
+fill_from = Vector2(1, 1)
 
 [node name="MainMenu" type="MarginContainer"]
 texture_filter = 1
@@ -54,7 +77,160 @@ size_flags_vertical = 4
 layout_mode = 2
 text = "Back"
 
+[node name="WorldSelect" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Title" type="MarginContainer" parent="WorldSelect"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Background" type="TextureRect" parent="WorldSelect/Title"]
+layout_mode = 2
+texture = ExtResource("5_qxgdh")
+stretch_mode = 1
+
+[node name="SelectWorld" type="Label" parent="WorldSelect/Title"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Select World"
+label_settings = SubResource("LabelSettings_bbo4o")
+
+[node name="Area" type="MarginContainer" parent="WorldSelect"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 6.0
+
+[node name="Background" type="TextureRect" parent="WorldSelect/Area"]
+layout_mode = 2
+size_flags_stretch_ratio = 5.0
+texture = ExtResource("5_8xpyi")
+stretch_mode = 1
+
+[node name="ShadowGradients" type="VBoxContainer" parent="WorldSelect/Area"]
+layout_mode = 2
+
+[node name="Upper" type="TextureRect" parent="WorldSelect/Area/ShadowGradients"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = SubResource("GradientTexture2D_fflw7")
+
+[node name="Middle" type="TextureRect" parent="WorldSelect/Area/ShadowGradients"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="Lower" type="TextureRect" parent="WorldSelect/Area/ShadowGradients"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = SubResource("GradientTexture2D_uch8p")
+
+[node name="MarginContainer" type="MarginContainer" parent="WorldSelect/Area"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="Worlds" type="VBoxContainer" parent="WorldSelect/Area/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_constants/separation = 1
+
+[node name="Button" type="Button" parent="WorldSelect/Area/MarginContainer/Worlds"]
+layout_mode = 2
+toggle_mode = true
+text = "ranga au"
+
+[node name="Button2" type="Button" parent="WorldSelect/Area/MarginContainer/Worlds"]
+layout_mode = 2
+toggle_mode = true
+text = "ranga au"
+
+[node name="Footer" type="MarginContainer" parent="WorldSelect"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Background" type="TextureRect" parent="WorldSelect/Footer"]
+layout_mode = 2
+texture = ExtResource("5_qxgdh")
+stretch_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="WorldSelect/Footer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="Buttons" type="GridContainer" parent="WorldSelect/Footer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 2
+
+[node name="PlaySelectedWorld" type="Button" parent="WorldSelect/Footer/MarginContainer/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+disabled = true
+text = "Play Selected World"
+
+[node name="CreateNewWorld" type="Button" parent="WorldSelect/Footer/MarginContainer/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Create New World"
+
+[node name="Delete" type="Button" parent="WorldSelect/Footer/MarginContainer/Buttons"]
+layout_mode = 2
+size_flags_vertical = 4
+disabled = true
+text = "Delete"
+
+[node name="Back" type="Button" parent="WorldSelect/Footer/MarginContainer/Buttons"]
+layout_mode = 2
+text = "Back"
+
+[node name="DeleteWorld" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="Background" type="TextureRect" parent="DeleteWorld"]
+layout_mode = 2
+texture = ExtResource("5_8xpyi")
+stretch_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeleteWorld"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="DeleteWorld/VBoxContainer"]
+layout_mode = 2
+text = "Are you sure you want to delete {world_name}?"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DeleteWorld/VBoxContainer"]
+layout_mode = 2
+
+[node name="ActuallyDelete" type="Button" parent="DeleteWorld/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Delete"
+
+[node name="Cancel" type="Button" parent="DeleteWorld/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cancel"
+
 [connection signal="pressed" from="Buttons/Singleplayer" to="." method="_on_singleplayer_pressed"]
 [connection signal="pressed" from="Buttons/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="Buttons/Exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="SettingsMenu/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="WorldSelect/Footer/MarginContainer/Buttons/PlaySelectedWorld" to="." method="_on_play_selected_world_pressed"]
+[connection signal="pressed" from="WorldSelect/Footer/MarginContainer/Buttons/Delete" to="." method="_on_delete_pressed"]
+[connection signal="pressed" from="WorldSelect/Footer/MarginContainer/Buttons/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="DeleteWorld/VBoxContainer/HBoxContainer/ActuallyDelete" to="." method="_on_actually_delete_pressed"]
+[connection signal="pressed" from="DeleteWorld/VBoxContainer/HBoxContainer/Cancel" to="." method="_on_cancel_pressed"]

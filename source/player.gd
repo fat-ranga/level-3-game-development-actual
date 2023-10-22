@@ -18,8 +18,8 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		camera_base.rotate_y(-event.relative.x * 0.007)
-		camera.rotate_x(-event.relative.y * 0.007)
+		camera_base.rotate_y(-event.relative.x * 0.005)
+		camera.rotate_x(-event.relative.y * 0.005)
 		camera.rotation.x = clamp(camera.rotation.x, -90 * (PI/180), 90 * (PI/180))
 	
 	if event.is_action_pressed("ui_cancel"):
