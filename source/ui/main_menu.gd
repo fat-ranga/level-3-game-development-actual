@@ -5,7 +5,7 @@ class_name MainMenu
 signal start_game
 
 @onready var buttons: VBoxContainer = $Buttons
-@onready var settings_menu: VBoxContainer = $SettingsMenu
+@onready var settings_menu: SettingsMenu = $SettingsMenu
 @onready var singleplayer: Button = $Buttons/Singleplayer
 @onready var world_select: VBoxContainer = $WorldSelect
 @onready var world_buttons: VBoxContainer = $WorldSelect/Area/MarginContainer/Worlds

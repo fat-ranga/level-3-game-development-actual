@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://ct4a2mphhsued"]
+[gd_scene load_steps=13 format=3 uid="uid://ct4a2mphhsued"]
 
 [ext_resource type="Texture2D" uid="uid://b8re1okv7b0q0" path="res://data/textures/ui/background.png" id="1_on45o"]
 [ext_resource type="Theme" uid="uid://1c1e156uchg8" path="res://data/theme/kiwicraft_theme.tres" id="1_owtia"]
 [ext_resource type="Texture2D" uid="uid://dfw17wplxhfp" path="res://data/textures/ui/kiwicraft.png" id="2_3wa63"]
 [ext_resource type="Script" path="res://source/ui/main_menu.gd" id="2_8y16x"]
 [ext_resource type="Texture2D" uid="uid://bmcvk7udp83yu" path="res://data/textures/atlas/black_sand.png" id="5_8xpyi"]
+[ext_resource type="PackedScene" uid="uid://bmmoi86ihalo3" path="res://scenes/ui/settings_menu.tscn" id="5_ku5jx"]
 [ext_resource type="Texture2D" uid="uid://ckh4k2moahupt" path="res://data/textures/atlas/planks.png" id="5_qxgdh"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_bbo4o"]
@@ -69,15 +70,9 @@ text = "Settings"
 layout_mode = 2
 text = "Exit"
 
-[node name="SettingsMenu" type="VBoxContainer" parent="."]
+[node name="SettingsMenu" parent="." instance=ExtResource("5_ku5jx")]
 visible = false
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="Back" type="Button" parent="SettingsMenu"]
-layout_mode = 2
-text = "Back"
 
 [node name="WorldSelect" type="VBoxContainer" parent="."]
 visible = false
@@ -234,7 +229,6 @@ text = "Cancel"
 [connection signal="pressed" from="Buttons/Singleplayer" to="." method="_on_singleplayer_pressed"]
 [connection signal="pressed" from="Buttons/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="Buttons/Exit" to="." method="_on_exit_pressed"]
-[connection signal="pressed" from="SettingsMenu/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="WorldSelect/Footer/MarginContainer/Buttons/PlaySelectedWorld" to="." method="_on_play_selected_world_pressed"]
 [connection signal="pressed" from="WorldSelect/Footer/MarginContainer/Buttons/Delete" to="." method="_on_delete_pressed"]
 [connection signal="pressed" from="WorldSelect/Footer/MarginContainer/Buttons/Back" to="." method="_on_back_pressed"]

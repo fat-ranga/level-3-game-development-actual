@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://d2eqichq2s0vl"]
+[gd_scene load_steps=19 format=3 uid="uid://d2eqichq2s0vl"]
 
 [ext_resource type="Script" path="res://source/world.gd" id="1_whit5"]
 [ext_resource type="ArrayMesh" uid="uid://cxg21ydocvx0t" path="res://data/meshes/natives_nikau.res" id="2_i4ajs"]
@@ -43,6 +43,8 @@ height_range = 64.0
 noise = SubResource("FastNoiseLite_fihqn")
 curve = SubResource("Curve_blil8")
 
+[sub_resource type="VoxelMesherTransvoxel" id="VoxelMesherTransvoxel_llf32"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_as4ia"]
 transparency = 2
 alpha_scissor_threshold = 0.5
@@ -84,8 +86,9 @@ shadow_enabled = true
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="."]
 generator = SubResource("VoxelGeneratorNoise2D_7ick3")
+mesher = SubResource("VoxelMesherTransvoxel_llf32")
 bounds = AABB(-8192, 0, -8192, 16384, 256, 16384)
-max_view_distance = 256
+max_view_distance = 512
 collision_mask = 7
 material_override = SubResource("StandardMaterial3D_as4ia")
 mesh_block_size = 32
@@ -94,4 +97,4 @@ mesh_block_size = 32
 library = SubResource("VoxelInstanceLibrary_qrji1")
 
 [node name="Player" parent="." instance=ExtResource("5_ex6va")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 44.9936, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 78.5161, 0)

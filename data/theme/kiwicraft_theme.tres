@@ -1,9 +1,15 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://1c1e156uchg8"]
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://1c1e156uchg8"]
 
 [ext_resource type="StyleBox" uid="uid://r8b5tba8exqk" path="res://data/theme/style_box/selected.tres" id="1_y460c"]
 [ext_resource type="StyleBox" uid="uid://2v46pt8vc6pp" path="res://data/theme/style_box/selected_outline.tres" id="2_3s6yq"]
 [ext_resource type="StyleBox" uid="uid://w2d3aoqftmyl" path="res://data/theme/style_box/normal.tres" id="2_cmdto"]
 [ext_resource type="FontFile" uid="uid://beh8j0kgfu6rg" path="res://data/fonts/Kiwicraft.ttf" id="3_fer30"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hs4ap"]
+bg_color = Color(0, 0, 0, 0.529412)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mrh8w"]
+bg_color = Color(0.305882, 0.458824, 0.223529, 1)
 
 [resource]
 default_font = ExtResource("3_fer30")
@@ -13,3 +19,5 @@ Button/styles/focus = ExtResource("2_3s6yq")
 Button/styles/hover = ExtResource("1_y460c")
 Button/styles/normal = ExtResource("2_cmdto")
 Button/styles/pressed = ExtResource("1_y460c")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_hs4ap")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_mrh8w")

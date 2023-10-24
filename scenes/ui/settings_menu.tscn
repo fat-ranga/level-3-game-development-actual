@@ -1,0 +1,68 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmmoi86ihalo3"]
+
+[ext_resource type="Theme" uid="uid://1c1e156uchg8" path="res://data/theme/kiwicraft_theme.tres" id="1_2q0m0"]
+[ext_resource type="Script" path="res://source/ui/settings_menu.gd" id="1_avhyg"]
+
+[node name="SettingsMenu" type="MarginContainer"]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_2q0m0")
+script = ExtResource("1_avhyg")
+
+[node name="All" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 16
+
+[node name="Settings" type="VBoxContainer" parent="All"]
+layout_mode = 2
+
+[node name="UIScale" type="HBoxContainer" parent="All/Settings"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Name" type="Label" parent="All/Settings/UIScale"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "UI Scale"
+
+[node name="HSlider" type="HSlider" parent="All/Settings/UIScale"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 4.0
+value = 1.0
+
+[node name="Number" type="Label" parent="All/Settings/UIScale"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+
+[node name="Apply" type="Button" parent="All/Settings"]
+layout_mode = 2
+text = "Apply Changes"
+
+[node name="TextureRect" type="TextureRect" parent="All/Settings"]
+layout_mode = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="All/Settings"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Separator" type="VBoxContainer" parent="All"]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="All/Separator"]
+layout_mode = 2
+text = "Back"
+
+[connection signal="value_changed" from="All/Settings/UIScale/HSlider" to="." method="_on_h_slider_value_changed"]

@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://binu5msceb3g8"
-path.s3tc="res://.godot/imported/human_diffuse.png-7547fa60088b852a6d792655d9ae496c.s3tc.ctex"
+uid="uid://j0st2dmuvqhy"
+path.s3tc="res://.godot/imported/AKTexture.png-f865087f382f7445b201a4d67f1c8e5b.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://data/textures/human_diffuse.png"
-dest_files=["res://.godot/imported/human_diffuse.png-7547fa60088b852a6d792655d9ae496c.s3tc.ctex"]
+source_file="res://data/import/AKTexture.png"
+dest_files=["res://.godot/imported/AKTexture.png-f865087f382f7445b201a4d67f1c8e5b.s3tc.ctex"]
 
 [params]
 
