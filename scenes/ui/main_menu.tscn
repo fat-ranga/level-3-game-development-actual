@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ct4a2mphhsued"]
+[gd_scene load_steps=12 format=3 uid="uid://ct4a2mphhsued"]
 
 [ext_resource type="Texture2D" uid="uid://b8re1okv7b0q0" path="res://data/textures/ui/background.png" id="1_on45o"]
 [ext_resource type="Theme" uid="uid://1c1e156uchg8" path="res://data/theme/kiwicraft_theme.tres" id="1_owtia"]
@@ -27,6 +27,8 @@ gradient = SubResource("Gradient_m2bu4")
 width = 16
 height = 16
 fill_from = Vector2(1, 1)
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_vnyq6"]
 
 [node name="MainMenu" type="MarginContainer"]
 texture_filter = 1
@@ -142,11 +144,15 @@ theme_override_constants/separation = 1
 [node name="Button" type="Button" parent="WorldSelect/Area/MarginContainer/Worlds"]
 layout_mode = 2
 toggle_mode = true
+action_mode = 0
+button_group = SubResource("ButtonGroup_vnyq6")
 text = "ranga au"
 
 [node name="Button2" type="Button" parent="WorldSelect/Area/MarginContainer/Worlds"]
 layout_mode = 2
 toggle_mode = true
+action_mode = 0
+button_group = SubResource("ButtonGroup_vnyq6")
 text = "ranga au"
 
 [node name="Footer" type="MarginContainer" parent="WorldSelect"]

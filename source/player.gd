@@ -3,10 +3,10 @@ extends CharacterBody3D
 class_name Player
 
 const SPEED: float = 10.0
-const JUMP_VELOCITY: float = 8
+const JUMP_VELOCITY: float = 9.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity: float = -10.0
+var gravity: float = -14.0
 
 @onready var camera: Camera3D = $CameraBase/Camera
 @onready var camera_base: Node3D = $CameraBase
@@ -26,7 +26,9 @@ func _input(event: InputEvent) -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func _process(delta: float) -> void:
-	# TODO: delta time
+	# TODO: delta time with previous pos and rot and lerp + slerp???
+	# Camera transforms are independent of the player. Done this way so that we
+	# don't rotate the collision shape, and perhaps also to have interpolation.
 	camera_base.global_position = global_position + initial_camera_base_position
 
 func _physics_process(delta: float) -> void:

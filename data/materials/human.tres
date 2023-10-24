@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dshhd6neq2lr7"]
+
+[ext_resource type="Texture2D" uid="uid://bj1k3r8emmaq0" path="res://data/textures/human_diffuse.png" id="1_wrwqc"]
+
+[resource]
+resource_name = "human"
+vertex_color_use_as_albedo = true
+albedo_color = Color(0, 0, 0, 1)
+metallic = 1.0
+emission_enabled = true
+emission_texture = ExtResource("1_wrwqc")

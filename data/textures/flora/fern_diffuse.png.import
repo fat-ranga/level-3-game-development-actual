@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://crympf6yebp8g"
-path="res://.godot/imported/nikau_diffuse.png-7dadbbda881dd4da69f0f4641bfddbc1.ctex"
+uid="uid://h4ovssbfudcp"
+path="res://.godot/imported/fern_diffuse.png-ee564c0130d9860d5e1b6bc767e1c1e9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/import/nikau_diffuse.png"
-dest_files=["res://.godot/imported/nikau_diffuse.png-7dadbbda881dd4da69f0f4641bfddbc1.ctex"]
+source_file="res://data/textures/flora/fern_diffuse.png"
+dest_files=["res://.godot/imported/fern_diffuse.png-ee564c0130d9860d5e1b6bc767e1c1e9.ctex"]
 
 [params]
 

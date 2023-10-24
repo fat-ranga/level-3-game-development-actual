@@ -31,6 +31,5 @@ func _start_game() -> void:
 	world.texture_atlas = texture_atlas_data[TextureAtlasPacker.DataType.TEXTURE]
 	world.texture_ids = texture_atlas_data[TextureAtlasPacker.DataType.TEXTURE_IDS]
 	world.atlas_size_in_tiles = texture_atlas_data[TextureAtlasPacker.DataType.ATLAS_SIZE_IN_TILES]
-	world.initialise_world()
 	add_child(world)
 	main_menu.hide()
