@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bblm4rad1p87c"
-path="res://.godot/imported/nikau_diffuse.png-2bbe47a9cd223e3000baf6e9daf47b8f.ctex"
+uid="uid://c82y35qfjhlqr"
+path="res://.godot/imported/human_diffuse.png-d0fd7f288b624927a052392dc41222f6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/textures/flora/nikau_diffuse.png"
-dest_files=["res://.godot/imported/nikau_diffuse.png-2bbe47a9cd223e3000baf6e9daf47b8f.ctex"]
+source_file="res://data/import/human_diffuse.png"
+dest_files=["res://.godot/imported/human_diffuse.png-d0fd7f288b624927a052392dc41222f6.ctex"]
 
 [params]
 

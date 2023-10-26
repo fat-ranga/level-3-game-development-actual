@@ -14,12 +14,15 @@ config/name="Kael Level 3 Game"
 run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 boot_splash/show_image=false
-config/icon="res://icon.svg"
+config/icon="res://data/icon.png"
+config/windows_native_icon="res://icon.ico"
 
 [autoload]
 
 Constants="*res://source/global/constants.gd"
 Settings="*res://source/global/settings.gd"
+Mod="*res://source/global/mod.gd"
+ItemDatabase="*res://source/global/item_database_autoload.gd"
 
 [debug]
 

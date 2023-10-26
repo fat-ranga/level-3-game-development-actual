@@ -4,23 +4,33 @@ class_name Player
 
 const SPEED: float = 10.0
 const JUMP_VELOCITY: float = 9.0
+const GRAVITY: float = -14.0
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity: float = -14.0
+var health: int = 100
 
 @onready var camera: Camera3D = $CameraBase/Camera
 @onready var camera_base: Node3D = $CameraBase
-
 @onready var initial_camera_base_position: Vector3 = camera_base.position - position
+@onready var arms_base: Node3D = $CameraBase/Camera/ArmsBase
+@onready var inventory: Inventory = $Inventory
+
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	inventory.items.append(ItemDatabase.item["7.62x39"])
+	print(inventory.items[0].damage)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		camera_base.rotate_y(-event.relative.x * 0.005)
 		camera.rotate_x(-event.relative.y * 0.005)
 		camera.rotation.x = clamp(camera.rotation.x, -90 * (PI/180), 90 * (PI/180))
+		
+		# Arm drag.
+		arms_base.position.x += -event.relative.x * 0.002
+		arms_base.position.y += event.relative.y * 0.002
+		
 	
 	if event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -30,11 +40,12 @@ func _process(delta: float) -> void:
 	# Camera transforms are independent of the player. Done this way so that we
 	# don't rotate the collision shape, and perhaps also to have interpolation.
 	camera_base.global_position = global_position + initial_camera_base_position
-
+	arms_base.position = lerp(arms_base.position, Vector3(0.0, 0.0, 0.0), delta * 15.0)
+	
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
-		velocity.y += gravity * delta * 2
+			velocity.y += GRAVITY * delta * 2
 
 	# Handle jump.
 	if Input.is_action_pressed("jump") and is_on_floor():
@@ -53,8 +64,6 @@ func _physics_process(delta: float) -> void:
 	
 	velocity.x = direction.x * SPEED
 	velocity.z = direction.z * SPEED
-	
-	
 	
 	move_and_slide()
 

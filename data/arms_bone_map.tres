@@ -1,0 +1,16 @@
+[gd_resource type="BoneMap" load_steps=2 format=3 uid="uid://ct4ng4npq553v"]
+
+[sub_resource type="SkeletonProfile" id="SkeletonProfile_qfttd"]
+bone_size = 1
+bones/0/bone_name = &""
+bones/0/bone_parent = &""
+bones/0/tail_direction = 0
+bones/0/reference_pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+bones/0/handle_offset = Vector2(0, 0)
+bones/0/group = &""
+bones/0/require = false
+
+[resource]
+profile = SubResource("SkeletonProfile_qfttd")
+bonemap = null
+bone_map/ = &""

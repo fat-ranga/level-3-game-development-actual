@@ -1,15 +1,15 @@
 [remap]
 
-importer="scene"
+importer="animation_library"
 importer_version=1
-type="PackedScene"
-uid="uid://b2eg3f21aakko"
-path="res://.godot/imported/fps_arms.gltf-83dc018db22b580fff86a8155fa59d66.scn"
+type="AnimationLibrary"
+uid="uid://dhne1wtp6do6q"
+path="res://.godot/imported/ak_47_arms_anim.gltf-a5dd9c22bc5b2333a26cf43a8004235d.res"
 
 [deps]
 
-source_file="res://data/import/fps_arms.gltf"
-dest_files=["res://.godot/imported/fps_arms.gltf-83dc018db22b580fff86a8155fa59d66.scn"]
+source_file="res://data/import/ak_47_arms_anim.gltf"
+dest_files=["res://.godot/imported/ak_47_arms_anim.gltf-a5dd9c22bc5b2333a26cf43a8004235d.res"]
 
 [params]
 
@@ -29,15 +29,9 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 import_script/path=""
 _subresources={
-"materials": {
-"human": {
-"use_external/enabled": true,
-"use_external/path": "res://data/materials/human.tres"
-}
-},
 "nodes": {
-"PATH:Armature/Skeleton3D": {
-"retarget/bone_map": null
+"PATH:Armature_001/Skeleton3D": {
+"retarget/bone_map": Resource("res://data/arms_bone_map.tres")
 }
 }
 }

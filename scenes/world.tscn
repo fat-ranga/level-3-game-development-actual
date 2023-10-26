@@ -1,9 +1,10 @@
-[gd_scene load_steps=19 format=3 uid="uid://d2eqichq2s0vl"]
+[gd_scene load_steps=24 format=3 uid="uid://d2eqichq2s0vl"]
 
 [ext_resource type="Script" path="res://source/world.gd" id="1_whit5"]
 [ext_resource type="ArrayMesh" uid="uid://cxg21ydocvx0t" path="res://data/meshes/natives_nikau.res" id="2_i4ajs"]
 [ext_resource type="ArrayMesh" uid="uid://bodhwux60hu67" path="res://data/meshes/natives_silver_fern.res" id="3_74fwo"]
 [ext_resource type="PackedScene" uid="uid://12bx43nfleo8" path="res://scenes/flora/nikau.tscn" id="3_p6bu4"]
+[ext_resource type="PackedScene" uid="uid://c466wpyskci5g" path="res://scenes/flora/kauri.tscn" id="5_7xyo0"]
 [ext_resource type="PackedScene" uid="uid://s0gnycogpfs0" path="res://scenes/player.tscn" id="5_ex6va"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_uxvhl"]
@@ -70,9 +71,23 @@ min_scale = 0.8
 generator = SubResource("VoxelInstanceGenerator_4gq4g")
 mesh = ExtResource("3_74fwo")
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_fryha"]
+
+[sub_resource type="VoxelInstanceGenerator" id="VoxelInstanceGenerator_md6e8"]
+density = 0.001
+noise = SubResource("FastNoiseLite_fryha")
+
+[sub_resource type="BoxMesh" id="BoxMesh_g4ppx"]
+
+[sub_resource type="VoxelInstanceLibraryMultiMeshItem" id="VoxelInstanceLibraryMultiMeshItem_v03of"]
+generator = SubResource("VoxelInstanceGenerator_md6e8")
+scene = ExtResource("5_7xyo0")
+mesh = SubResource("BoxMesh_g4ppx")
+
 [sub_resource type="VoxelInstanceLibrary" id="VoxelInstanceLibrary_qrji1"]
 item_1 = SubResource("VoxelInstanceLibraryMultiMeshItem_fbwsw")
 item_2 = SubResource("VoxelInstanceLibraryMultiMeshItem_r4qq7")
+item_3 = SubResource("VoxelInstanceLibraryMultiMeshItem_v03of")
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_whit5")
