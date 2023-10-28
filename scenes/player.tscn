@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://s0gnycogpfs0"]
+[gd_scene load_steps=28 format=3 uid="uid://s0gnycogpfs0"]
 
 [ext_resource type="Script" path="res://source/player.gd" id="1_hb35k"]
 [ext_resource type="AudioStream" uid="uid://5buecktduga4" path="res://data/audio/46-tui-morning-chorus.mp3" id="2_51e1f"]
@@ -8,10 +8,10 @@
 [ext_resource type="Material" uid="uid://dshhd6neq2lr7" path="res://data/materials/human.tres" id="4_lk85v"]
 [ext_resource type="Texture2D" uid="uid://c8jysrec3vrf5" path="res://data/textures/atlas/iron_ore.png" id="5_1jdst"]
 [ext_resource type="Theme" uid="uid://1c1e156uchg8" path="res://data/theme/kiwicraft_theme.tres" id="5_t6gbb"]
-[ext_resource type="Texture2D" uid="uid://b0dhjxvrd802v" path="res://data/textures/ui/tile.png" id="6_nioab"]
-[ext_resource type="Texture2D" uid="uid://cse3smijgre6p" path="res://data/textures/ui/tile_selected.png" id="7_cjbas"]
-[ext_resource type="Texture2D" uid="uid://c45qxsed65xbs" path="res://data/textures/ui/icons/ak_47.png" id="11_1121k"]
-[ext_resource type="Texture2D" uid="uid://bmxb8awhhvulm" path="res://data/textures/ui/icons/bullet_7.62x39.png" id="12_reqj1"]
+[ext_resource type="Script" path="res://source/ui/player_ui.gd" id="7_jb10p"]
+[ext_resource type="Texture2D" uid="uid://b0dhjxvrd802v" path="res://data/textures/ui/tile.png" id="11_5tv7o"]
+[ext_resource type="Texture2D" uid="uid://cw4tl6x1qahf1" path="res://data/textures/ui/square_with_margin.png" id="11_klbso"]
+[ext_resource type="PackedScene" uid="uid://do7yimy34vikt" path="res://scenes/ui/item_slot.tscn" id="12_4e11v"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bcag7"]
 size = Vector3(0.6, 1.8, 0.6)
@@ -436,6 +436,7 @@ tracks/38/keys = PackedFloat32Array(0, 1, -0.111988, 0.0415568, -0.136508, 0.983
 [sub_resource type="Animation" id="Animation_87vng"]
 resource_name = "idle"
 length = 0.001
+loop_mode = 1
 tracks/0/type = "rotation_3d"
 tracks/0/imported = true
 tracks/0/enabled = true
@@ -1273,12 +1274,32 @@ _data = {
 "punch": SubResource("Animation_2dds4")
 }
 
-[node name="Player" type="CharacterBody3D"]
+[sub_resource type="Gradient" id="Gradient_kwotp"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_cmwcn"]
+gradient = SubResource("Gradient_kwotp")
+width = 32
+
+[sub_resource type="Gradient" id="Gradient_h4fnj"]
+colors = PackedColorArray(0, 0, 0, 0.54902, 0, 0, 0, 0.54902)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ol2qu"]
+gradient = SubResource("Gradient_h4fnj")
+width = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_655vd"]
+font_color = Color(0.65098, 0.65098, 0.65098, 1)
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("inventory")]
 collision_mask = 9
 wall_min_slide_angle = 0.0
 script = ExtResource("1_hb35k")
+inventory = NodePath("Inventory")
 
 [node name="Inventory" parent="." instance=ExtResource("2_b2gw0")]
+width = 9
+height = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
@@ -1433,20 +1454,20 @@ bones/18/parent = -1
 bones/18/rest = Transform3D(-0.0556355, -0.998451, -3.83542e-07, 0.998451, -0.0556354, 1.61614e-07, -1.82703e-07, -3.73956e-07, 1, -0.221572, -0.301905, 0.108861)
 bones/18/enabled = true
 bones/18/position = Vector3(-0.221572, -0.301905, 0.108861)
-bones/18/rotation = Quaternion(0.0442663, -0.00847493, 0.82017, 0.570342)
+bones/18/rotation = Quaternion(0.163542, 0.0940377, 0.725641, 0.661707)
 bones/18/scale = Vector3(1, 1, 1)
 bones/19/name = "DEF_forearm.R"
 bones/19/parent = 18
 bones/19/rest = Transform3D(0.997292, 0.0735221, -0.00181742, -0.0735445, 0.996987, -0.0246408, 3.04601e-07, 0.0247077, 0.999695, 2.82663e-08, 0.355341, 1.96525e-10)
 bones/19/enabled = true
 bones/19/position = Vector3(2.82663e-08, 0.355341, 1.96525e-10)
-bones/19/rotation = Quaternion(0.538997, -0.00540936, 0.184495, 0.821836)
+bones/19/rotation = Quaternion(0.728017, -0.012566, -0.524688, 0.441062)
 bones/19/scale = Vector3(1, 1, 1)
 bones/20/name = "CTRL_hand.R"
 bones/20/parent = -1
 bones/20/rest = Transform3D(0, -1, -7.27596e-12, 1, 0, -0.000221654, 0.000221654, 7.27596e-12, 1, -0.841159, -0.316921, 0.115406)
 bones/20/enabled = true
-bones/20/position = Vector3(-0.598256, -0.550086, 0.351727)
+bones/20/position = Vector3(-0.347023, -0.219709, 0.351727)
 bones/20/rotation = Quaternion(0.418018, 0.752173, 0.457015, 0.225018)
 bones/20/scale = Vector3(1, 1, 1)
 bones/21/name = "DEF_index.R.001"
@@ -1561,7 +1582,7 @@ mesh = SubResource("ArrayMesh_3nf87")
 skin = SubResource("Skin_68q3a")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="CameraBase/Camera/ArmsBase/Armature/Skeleton3D"]
-transform = Transform3D(-0.549255, 0.423171, 0.720587, 0.834518, 0.232796, 0.499385, 0.043576, 0.875633, -0.481008, -0.598256, -0.550086, 0.351727)
+transform = Transform3D(-0.549255, 0.423171, 0.720587, 0.834518, 0.232796, 0.499386, 0.0435762, 0.875633, -0.481008, -0.347023, -0.219709, 0.351727)
 bone_name = "CTRL_hand.R"
 bone_idx = 20
 
@@ -1571,7 +1592,7 @@ mesh = SubResource("BoxMesh_otnx0")
 surface_material_override/0 = SubResource("StandardMaterial3D_51icv")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CameraBase/Camera/ArmsBase"]
-autoplay = "equip_block"
+autoplay = "idle"
 libraries = {
 "": SubResource("AnimationLibrary_011qy")
 }
@@ -1582,7 +1603,9 @@ volume_db = -6.0
 autoplay = true
 bus = &"Ambience"
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("7_jb10p")
+player = NodePath("..")
 
 [node name="MarginContainer" type="MarginContainer" parent="UI"]
 texture_filter = 1
@@ -1593,7 +1616,52 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("5_t6gbb")
 
+[node name="ToolbarArea" type="VBoxContainer" parent="UI/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/ToolbarArea"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Healthbar" type="TextureProgressBar" parent="UI/MarginContainer/ToolbarArea/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 16)
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+rounded = true
+fill_mode = 6
+nine_patch_stretch = true
+stretch_margin_left = 1
+stretch_margin_top = 7
+stretch_margin_right = 1
+stretch_margin_bottom = 7
+texture_under = SubResource("GradientTexture1D_cmwcn")
+texture_progress = ExtResource("11_klbso")
+tint_under = Color(0, 0, 0, 0.490196)
+tint_progress = Color(0.552941, 0.737255, 0.270588, 1)
+
+[node name="HealthBarNumber" type="Label" parent="UI/MarginContainer/ToolbarArea/HBoxContainer/Healthbar"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 20.0
+grow_horizontal = 2
+text = "100"
+horizontal_alignment = 1
+
+[node name="Toolbar" type="HBoxContainer" parent="UI/MarginContainer/ToolbarArea"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/separation = -1
+
 [node name="Crosshair" type="TextureRect" parent="UI/MarginContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -1601,186 +1669,172 @@ size_flags_vertical = 4
 texture = ExtResource("3_j7ilq")
 expand_mode = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer"]
+[node name="DarkenBackground" type="TextureRect" parent="UI/MarginContainer"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
-theme_override_constants/margin_left = 24
-theme_override_constants/margin_top = 24
-theme_override_constants/margin_right = 24
-theme_override_constants/margin_bottom = 24
+texture = SubResource("GradientTexture1D_ol2qu")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer/MarginContainer"]
+[node name="MainInventory" type="MarginContainer" parent="UI/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 8
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
 size_flags_vertical = 4
 
-[node name="Healthbar" type="ProgressBar" parent="UI/MarginContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
+[node name="Background" type="NinePatchRect" parent="UI/MarginContainer/MainInventory"]
+visible = false
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture = ExtResource("11_5tv7o")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/MainInventory"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="MenuHorizontalContainer" type="HBoxContainer" parent="UI/MarginContainer/MainInventory/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="CraftingMargin" type="MarginContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-value = 100.0
-rounded = true
 
-[node name="Toolbar" type="HBoxContainer" parent="UI/MarginContainer/MarginContainer/VBoxContainer"]
+[node name="Background" type="NinePatchRect" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("11_5tv7o")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Crafting" type="VBoxContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting"]
+layout_mode = 2
+placeholder_text = "Search recipes..."
+alignment = 1
+context_menu_enabled = false
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ItemSlot" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource("12_4e11v")]
+layout_mode = 2
+
+[node name="ItemSlot2" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource("12_4e11v")]
+layout_mode = 2
+
+[node name="ItemSlot3" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource("12_4e11v")]
+layout_mode = 2
+
+[node name="ItemSlot4" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource("12_4e11v")]
+layout_mode = 2
+
+[node name="ItemSlot5" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource("12_4e11v")]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ItemSlot" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("12_4e11v")]
+layout_mode = 2
+
+[node name="ItemSlot2" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("12_4e11v")]
+layout_mode = 2
+
+[node name="ItemSlot3" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("12_4e11v")]
+layout_mode = 2
+
+[node name="ItemSlot4" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("12_4e11v")]
+layout_mode = 2
+
+[node name="ItemSlot5" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("12_4e11v")]
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ItemSlot" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("12_4e11v")]
+layout_mode = 2
+
+[node name="ItemSlot2" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("12_4e11v")]
+layout_mode = 2
+
+[node name="ItemSlot3" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("12_4e11v")]
+layout_mode = 2
+
+[node name="ItemSlot4" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("12_4e11v")]
+layout_mode = 2
+
+[node name="ItemSlot5" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("12_4e11v")]
+layout_mode = 2
+
+[node name="InventoryMargin" type="MarginContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Background" type="NinePatchRect" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("11_5tv7o")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Inventory"
+label_settings = SubResource("LabelSettings_655vd")
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SlotsContainer" type="VBoxContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin/MarginContainer/VBoxContainer2/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 8
-theme_override_constants/separation = -1
 
-[node name="TextureRect3" type="TextureRect" parent="UI/MarginContainer/MarginContainer/VBoxContainer/Toolbar"]
+[node name="ToolbarSlotsContainer" type="VBoxContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin/MarginContainer/VBoxContainer2/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("7_cjbas")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/MarginContainer/VBoxContainer/Toolbar/TextureRect3"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 2
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 2
-theme_override_constants/margin_bottom = 2
-
-[node name="TextureRect" type="TextureRect" parent="UI/MarginContainer/MarginContainer/VBoxContainer/Toolbar/TextureRect3/MarginContainer"]
+[node name="MarginContainer3" type="MarginContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer"]
 layout_mode = 2
-texture = ExtResource("5_1jdst")
-
-[node name="Label" type="Label" parent="UI/MarginContainer/MarginContainer/VBoxContainer/Toolbar/TextureRect3"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 3.0
-offset_bottom = 3.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_shadow_color = Color(0.145098, 0.145098, 0.145098, 1)
-theme_override_constants/shadow_offset_x = 1
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/shadow_outline_size = 0
-text = "64"
-horizontal_alignment = 2
-vertical_alignment = 2
-
-[node name="TextureRect" type="TextureRect" parent="UI/MarginContainer/MarginContainer/VBoxContainer/Toolbar"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("6_nioab")
-
-[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/MarginContainer/VBoxContainer/Toolbar/TextureRect"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 2
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 2
-theme_override_constants/margin_bottom = 2
-
-[node name="TextureRect" type="TextureRect" parent="UI/MarginContainer/MarginContainer/VBoxContainer/Toolbar/TextureRect/MarginContainer"]
-layout_mode = 2
-texture = ExtResource("11_1121k")
-expand_mode = 1
-
-[node name="Label" type="Label" parent="UI/MarginContainer/MarginContainer/VBoxContainer/Toolbar/TextureRect"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 3.0
-offset_bottom = 3.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_shadow_color = Color(0.145098, 0.145098, 0.145098, 1)
-theme_override_constants/shadow_offset_x = 1
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/shadow_outline_size = 0
-horizontal_alignment = 2
-vertical_alignment = 2
-
-[node name="TextureRect2" type="TextureRect" parent="UI/MarginContainer/MarginContainer/VBoxContainer/Toolbar"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("6_nioab")
-
-[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/MarginContainer/VBoxContainer/Toolbar/TextureRect2"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 2
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 2
-theme_override_constants/margin_bottom = 2
-
-[node name="TextureRect" type="TextureRect" parent="UI/MarginContainer/MarginContainer/VBoxContainer/Toolbar/TextureRect2/MarginContainer"]
-layout_mode = 2
-texture = ExtResource("12_reqj1")
-expand_mode = 1
-
-[node name="Label" type="Label" parent="UI/MarginContainer/MarginContainer/VBoxContainer/Toolbar/TextureRect2"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 3.0
-offset_bottom = 3.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_shadow_color = Color(0.145098, 0.145098, 0.145098, 1)
-theme_override_constants/shadow_offset_x = 1
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/shadow_outline_size = 0
-text = "7"
-horizontal_alignment = 2
-vertical_alignment = 2
-
-[node name="TextureRect4" type="TextureRect" parent="UI/MarginContainer/MarginContainer/VBoxContainer/Toolbar"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("6_nioab")
-
-[node name="TextureRect5" type="TextureRect" parent="UI/MarginContainer/MarginContainer/VBoxContainer/Toolbar"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("6_nioab")
-
-[node name="TextureRect6" type="TextureRect" parent="UI/MarginContainer/MarginContainer/VBoxContainer/Toolbar"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("6_nioab")
-
-[node name="TextureRect7" type="TextureRect" parent="UI/MarginContainer/MarginContainer/VBoxContainer/Toolbar"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("6_nioab")
-
-[node name="TextureRect8" type="TextureRect" parent="UI/MarginContainer/MarginContainer/VBoxContainer/Toolbar"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("6_nioab")
-
-[node name="TextureRect9" type="TextureRect" parent="UI/MarginContainer/MarginContainer/VBoxContainer/Toolbar"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("6_nioab")

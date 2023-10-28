@@ -31,8 +31,8 @@ volumetric_fog_density = 0.01
 volumetric_fog_sky_affect = 0.0
 
 [sub_resource type="Curve" id="Curve_blil8"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.54902, 0.473684), -4.00667, -4.00667, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 3
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0703971, 0.136842), 0.0, 0.0, 0, 0, Vector2(0.126354, 0.347368), 0.0, 0.0, 0, 0, Vector2(0.240072, 0.2), 0.0, 0.0, 0, 0, Vector2(0.34296, 0.505263), 0.0, 0.0, 0, 0, Vector2(0.435018, 0.863158), 0.0, 0.0, 0, 0, Vector2(0.54902, 0.473684), -4.00667, -4.00667, 0, 0, Vector2(0.680505, 0.242105), 0.0, 0.0, 0, 0, Vector2(0.767148, 0.515789), 0.0, 0.0, 0, 0, Vector2(0.857401, 0.631579), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 11
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_fihqn"]
 frequency = 0.004
@@ -44,7 +44,7 @@ height_range = 64.0
 noise = SubResource("FastNoiseLite_fihqn")
 curve = SubResource("Curve_blil8")
 
-[sub_resource type="VoxelMesherTransvoxel" id="VoxelMesherTransvoxel_llf32"]
+[sub_resource type="VoxelMesherTransvoxel" id="VoxelMesherTransvoxel_bgldc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_as4ia"]
 transparency = 2
@@ -101,7 +101,7 @@ shadow_enabled = true
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="."]
 generator = SubResource("VoxelGeneratorNoise2D_7ick3")
-mesher = SubResource("VoxelMesherTransvoxel_llf32")
+mesher = SubResource("VoxelMesherTransvoxel_bgldc")
 bounds = AABB(-8192, 0, -8192, 16384, 256, 16384)
 max_view_distance = 512
 collision_mask = 7

@@ -1,8 +1,9 @@
-[gd_resource type="Theme" load_steps=7 format=3 uid="uid://1c1e156uchg8"]
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://1c1e156uchg8"]
 
 [ext_resource type="StyleBox" uid="uid://r8b5tba8exqk" path="res://data/theme/style_box/selected.tres" id="1_y460c"]
 [ext_resource type="StyleBox" uid="uid://2v46pt8vc6pp" path="res://data/theme/style_box/selected_outline.tres" id="2_3s6yq"]
 [ext_resource type="StyleBox" uid="uid://w2d3aoqftmyl" path="res://data/theme/style_box/normal.tres" id="2_cmdto"]
+[ext_resource type="StyleBox" uid="uid://bjesh5npiis12" path="res://data/theme/style_box/hover.tres" id="3_2ixw3"]
 [ext_resource type="FontFile" uid="uid://beh8j0kgfu6rg" path="res://data/fonts/Kiwicraft.ttf" id="3_fer30"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hs4ap"]
@@ -16,8 +17,18 @@ default_font = ExtResource("3_fer30")
 default_font_size = 0
 Button/styles/disabled = ExtResource("2_cmdto")
 Button/styles/focus = ExtResource("2_3s6yq")
-Button/styles/hover = ExtResource("1_y460c")
+Button/styles/hover = ExtResource("3_2ixw3")
 Button/styles/normal = ExtResource("2_cmdto")
 Button/styles/pressed = ExtResource("1_y460c")
+HBoxContainer/constants/separation = 0
+LineEdit/styles/focus = ExtResource("2_cmdto")
+LineEdit/styles/normal = ExtResource("2_cmdto")
+LineEdit/styles/read_only = ExtResource("2_cmdto")
 ProgressBar/styles/background = SubResource("StyleBoxFlat_hs4ap")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_mrh8w")
+VBoxContainer/constants/separation = 0
+VScrollBar/styles/grabber = ExtResource("2_cmdto")
+VScrollBar/styles/grabber_highlight = ExtResource("1_y460c")
+VScrollBar/styles/grabber_pressed = ExtResource("2_3s6yq")
+VScrollBar/styles/scroll = ExtResource("2_cmdto")
+VScrollBar/styles/scroll_focus = ExtResource("2_cmdto")

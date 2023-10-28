@@ -2,6 +2,9 @@ extends CharacterBody3D
 
 class_name Player
 
+signal update_ui
+signal inventory_toggled
+
 const SPEED: float = 10.0
 const JUMP_VELOCITY: float = 9.0
 const GRAVITY: float = -14.0
@@ -12,13 +15,13 @@ var health: int = 100
 @onready var camera_base: Node3D = $CameraBase
 @onready var initial_camera_base_position: Vector3 = camera_base.position - position
 @onready var arms_base: Node3D = $CameraBase/Camera/ArmsBase
-@onready var inventory: Inventory = $Inventory
+@export var inventory: Inventory
 
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
-	inventory.items.append(ItemDatabase.item["7.62x39"])
+	inventory.add_item(ItemDatabase.item["7.62x39"])
 	print(inventory.items[0].damage)
 
 func _input(event: InputEvent) -> void:
@@ -34,6 +37,12 @@ func _input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	
+	if event.is_action_pressed("ui_home"):
+		damage(7)
+		
+	if event.is_action_pressed("toggle_inventory"):
+		inventory_toggled.emit()
 
 func _process(delta: float) -> void:
 	# TODO: delta time with previous pos and rot and lerp + slerp???
@@ -41,6 +50,11 @@ func _process(delta: float) -> void:
 	# don't rotate the collision shape, and perhaps also to have interpolation.
 	camera_base.global_position = global_position + initial_camera_base_position
 	arms_base.position = lerp(arms_base.position, Vector3(0.0, 0.0, 0.0), delta * 15.0)
+	
+	if Input.is_action_pressed("aim"):
+		camera.fov = lerp(camera.fov, 50.0, delta * 15.0)
+	else:
+		camera.fov = lerp(camera.fov, 90.0, delta * 15.0)
 	
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -69,3 +83,12 @@ func _physics_process(delta: float) -> void:
 
 func _ground_move() -> void:
 	pass
+
+func damage(amount: int) -> void:
+	health -= amount
+	if health <= 0:
+		_die()
+	update_ui.emit()
+
+func _die():
+	print("nahh dead au!")
