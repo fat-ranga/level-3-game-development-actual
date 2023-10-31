@@ -1,14 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://rmusp2m5p2t3"]
+[gd_scene load_steps=4 format=3 uid="uid://rmusp2m5p2t3"]
 
 [ext_resource type="Texture2D" uid="uid://c45qxsed65xbs" path="res://data/textures/ui/icons/ak_47.png" id="1_0dy2d"]
 [ext_resource type="Theme" uid="uid://1c1e156uchg8" path="res://data/theme/kiwicraft_theme.tres" id="1_5ce4n"]
+[ext_resource type="Script" path="res://source/ui/slot_icon.gd" id="2_3wsud"]
 
-[node name="Icon" type="Control"]
+[node name="Icon" type="Control" node_paths=PackedStringArray("texture_rect", "number")]
 texture_filter = 1
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("1_5ce4n")
+script = ExtResource("2_3wsud")
+texture_rect = NodePath("MarginContainer/TextureRect")
+number = NodePath("Number")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -41,3 +45,6 @@ theme_override_constants/shadow_outline_size = 0
 text = "64"
 horizontal_alignment = 2
 vertical_alignment = 2
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

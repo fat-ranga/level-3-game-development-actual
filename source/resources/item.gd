@@ -9,4 +9,4 @@ class_name Item
 @export var icon: CompressedTexture2D = preload("res://data/textures/ui/icons/default.png")
 @export var hand_scene: PackedScene
 
-@export var current_amount: int = 0
+@export var current_amount: int = 1

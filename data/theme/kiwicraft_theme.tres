@@ -14,7 +14,6 @@ bg_color = Color(0.305882, 0.458824, 0.223529, 1)
 
 [resource]
 default_font = ExtResource("3_fer30")
-default_font_size = 0
 Button/styles/disabled = ExtResource("2_cmdto")
 Button/styles/focus = ExtResource("2_3s6yq")
 Button/styles/hover = ExtResource("3_2ixw3")
@@ -24,8 +23,14 @@ HBoxContainer/constants/separation = 0
 LineEdit/styles/focus = ExtResource("2_cmdto")
 LineEdit/styles/normal = ExtResource("2_cmdto")
 LineEdit/styles/read_only = ExtResource("2_cmdto")
+Panel/styles/panel = ExtResource("2_cmdto")
 ProgressBar/styles/background = SubResource("StyleBoxFlat_hs4ap")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_mrh8w")
+TooltipLabel/constants/shadow_offset_x = 0
+TooltipLabel/constants/shadow_offset_y = 0
+TooltipLabel/font_sizes/font_size = 16
+TooltipLabel/fonts/font = ExtResource("3_fer30")
+TooltipPanel/styles/panel = ExtResource("2_cmdto")
 VBoxContainer/constants/separation = 0
 VScrollBar/styles/grabber = ExtResource("2_cmdto")
 VScrollBar/styles/grabber_highlight = ExtResource("1_y460c")

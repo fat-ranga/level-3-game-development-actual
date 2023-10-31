@@ -1,7 +1,7 @@
 extends CanvasLayer
 
-const max_colour: Color = Color(0.306, 0.459, 0.224)
-const min_colour: Color = Color(0.722, 0.176, 0.169)
+const max_colour: Color = Color(0.306, 0.459, 0.224) # Green.
+const min_colour: Color = Color(0.722, 0.176, 0.169) # Red.
 
 @export var player: Player
 
@@ -14,16 +14,15 @@ const min_colour: Color = Color(0.722, 0.176, 0.169)
 @onready var darken_background: TextureRect = %DarkenBackground
 @onready var toolbar: HBoxContainer = %Toolbar
 
-@onready var slot_icon_scene: PackedScene = preload("res://scenes/ui/slot_icon.tscn")
 @onready var item_slot_scene: PackedScene = preload("res://scenes/ui/item_slot.tscn")
 
-var item_slots: Array = []
+var main_item_slots: Array[ItemSlot] = []
+var toolbar_slots: Array = [ItemSlot]
 
 func _ready() -> void:
 	player.update_ui.connect(_update_ui)
 	player.inventory_toggled.connect(_inventory_toggled)
-	
-	player.inventory.item_added.connect(_on_item_added)
+	player.inventory.item_set.connect(_update_grid_icons)
 	
 	_generate_inventory_ui()
 	_update_ui()
@@ -33,21 +32,22 @@ func _update_ui() -> void:
 	health_bar_number.text = str(healthbar.value)
 	healthbar.tint_progress = lerp(min_colour, max_colour, (healthbar.value / 100))
 
-func _on_item_added(item: Item, amount: int) -> void:
-	print("YO YO YO")
-	print(item.icon)
-	print(amount)
-	print(player.inventory.get_item(Vector2(2, 0.7)))
+func _update_grid_icons() -> void:
+	# First, delete all icons we currently have.
+	for i in range(main_item_slots.size()):
+		main_item_slots[i].remove_item_icon()
 	
-	for y in range(player.inventory.height):
-		for x in range(player.inventory.width):
-			var item_ref: Item = player.inventory.get_item(Vector2(x, y))
-			if not item_ref:
-				continue
-			
-			print("is item")
-			
-			
+	# Loop through and add icons to each slot based on item
+	# type and number.
+	for i in range(main_item_slots.size()):
+		var item_ref: Item = player.inventory.items[i]
+		
+		# If there is no item in the slot, remove the icon and leave the slot blank.
+		if not item_ref:
+			main_item_slots[i].remove_item_icon()
+			continue
+		
+		main_item_slots[i].set_item_icon(item_ref)
 
 func _inventory_toggled() -> void:
 	main_inventory.visible = not main_inventory.visible
@@ -70,6 +70,7 @@ func _generate_inventory_ui() -> void:
 		
 		for x in range(player.inventory.width):
 			var new_slot: Button = item_slot_scene.instantiate()
+			main_item_slots.append(new_slot)
 			new_h_box.add_child(new_slot)
 			
 	# Generate the INVENTORY toolbar slot, not the one at the bottom of the screen.
@@ -80,11 +81,13 @@ func _generate_inventory_ui() -> void:
 	
 	for x in range(player.inventory.width):
 		var new_slot: Button = item_slot_scene.instantiate()
+		main_item_slots.append(new_slot)
 		new_h_box.add_child(new_slot)
 	
 	# Generate the main visible toolbar.
 	for x in range(player.inventory.width):
 		var new_slot: Button = item_slot_scene.instantiate()
+		toolbar_slots.append(new_slot)
 		toolbar.add_child(new_slot)
 		#var icon: Control = slot_icon_scene.instantiate()
 		#new_slot.add_child(icon)

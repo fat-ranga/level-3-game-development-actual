@@ -10,6 +10,7 @@ const JUMP_VELOCITY: float = 9.0
 const GRAVITY: float = -14.0
 
 var health: int = 100
+var is_in_menu: bool = false
 
 @onready var camera: Camera3D = $CameraBase/Camera
 @onready var camera_base: Node3D = $CameraBase
@@ -21,10 +22,20 @@ var health: int = 100
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
+	inventory.add_item(ItemDatabase.item["9x18"])
 	inventory.add_item(ItemDatabase.item["7.62x39"])
-	print(inventory.items[0].damage)
+	
+	var new_item: Item = ItemDatabase.item["9x18"]
+	new_item.current_amount = 4
+	inventory.add_item(new_item)
+	#inventory.add_item(ItemDatabase.item["ak_47"], 1)
+	print(inventory.items[0])
 
 func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("toggle_inventory"):
+		is_in_menu = true
+		inventory_toggled.emit()
+	
 	if event is InputEventMouseMotion:
 		camera_base.rotate_y(-event.relative.x * 0.005)
 		camera.rotate_x(-event.relative.y * 0.005)
@@ -41,8 +52,6 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_home"):
 		damage(7)
 		
-	if event.is_action_pressed("toggle_inventory"):
-		inventory_toggled.emit()
 
 func _process(delta: float) -> void:
 	# TODO: delta time with previous pos and rot and lerp + slerp???

@@ -12,7 +12,7 @@ id = &"7.62x39"
 name = "7.62x39"
 max_amount = 64
 icon = ExtResource("1_cc78k")
-current_amount = 0
+current_amount = 1
 
 [sub_resource type="Resource" id="Resource_0n54q"]
 script = ExtResource("2_xjdlq")
@@ -21,7 +21,7 @@ id = &"9x18"
 name = "9x18"
 max_amount = 64
 icon = ExtResource("3_vj34a")
-current_amount = 0
+current_amount = 1
 
 [resource]
 script = ExtResource("1_ccwun")

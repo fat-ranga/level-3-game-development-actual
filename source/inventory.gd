@@ -2,7 +2,7 @@ extends Node
 
 class_name Inventory
 
-signal item_added(item: Item, amount: int)
+signal item_set
 
 @export var width: int = 3
 @export var height: int = 3
@@ -15,30 +15,41 @@ func _ready() -> void:
 
 func set_item(position: Vector2, item: Item):
 	items[int(position.x) * width + int(position.y)] = item
+	item_set.emit()
 
-func add_item(item: Item, amount: int = 1):
-	
+func add_item(item: Item):
 	# Iterate through the array until we find a slot occupied by an item
 	# of the same type, and increase its amount if the slot isn't greater than its max item stack count.
-	for x in range(height):  # TODO: I should do some thinking as to why it's this way round.
+	for x in range(height):
 		for y in range(width):
-			if items[x * width + y]:  # Make sure an item exists in the slot.
-				if items[x * width + y].id == item.id:
-					if items[x * width + y].current_amount < item.max_amount:
-						items[x * width + y].current_amount += 1
-						item_added.emit(item, amount) # toodo temp
-						return
+			if not items[x * width + y]:  # empty slot, move onto next
+				continue
+			if not items[x * width + y].id == item.id: # not same type, move onto next
+				continue
+			# too many, add extras into new slot
+			if items[x * width + y].current_amount + item.current_amount > item.max_amount:
+				print(item.current_amount)
+				item.current_amount -= item.max_amount - items[x * width + y].current_amount
+				items[x * width + y].current_amount = item.max_amount
+				print("sigmas fr")
+				print(item.current_amount)
+				_make_new_item_in_empty_slot(item)
+				item_set.emit()
+				return
+			if items[x * width + y].current_amount + item.current_amount <= item.max_amount:
+				items[x * width + y].current_amount += item.current_amount
+				return
 	
-	print("adding new item instead")
-	# Otherwise, iterate through the array until we find a slot that
-	# isn't occupied by an item.
+	# No suitable slots of same type, just try adding it as a new item.
+	_make_new_item_in_empty_slot(item)
+
+func _make_new_item_in_empty_slot(item: Item) -> void:
 	for x in range(height):
 		for y in range(width):
 			if not items[x * width + y]:
 				set_item(Vector2(x, y), item)
-				item_added.emit(item, amount) # toodo temp
 				return
-
+	
 	print_rich("Can't fit item {item.id} in inventory!")
 
 func get_item(position: Vector2) -> Item:

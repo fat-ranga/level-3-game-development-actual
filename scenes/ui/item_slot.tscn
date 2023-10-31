@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://do7yimy34vikt"]
+[gd_scene load_steps=4 format=3 uid="uid://do7yimy34vikt"]
 
 [ext_resource type="Theme" uid="uid://1c1e156uchg8" path="res://data/theme/kiwicraft_theme.tres" id="1_nvgry"]
+[ext_resource type="Script" path="res://source/ui/item_slot.gd" id="2_xp0ge"]
 [ext_resource type="PackedScene" uid="uid://rmusp2m5p2t3" path="res://scenes/ui/slot_icon.tscn" id="2_ybfyo"]
 
-[node name="ItemSlot" type="Button"]
+[node name="ItemSlot" type="Button" node_paths=PackedStringArray("_item_icon")]
 texture_filter = 1
 custom_minimum_size = Vector2(24, 24)
 offset_right = 24.0
@@ -11,6 +12,8 @@ offset_bottom = 24.0
 size_flags_horizontal = 6
 size_flags_vertical = 6
 theme = ExtResource("1_nvgry")
+script = ExtResource("2_xp0ge")
+_item_icon = NodePath("Icon")
 
 [node name="Icon" parent="." instance=ExtResource("2_ybfyo")]
 visible = false

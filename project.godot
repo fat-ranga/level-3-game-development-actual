@@ -33,6 +33,10 @@ gdscript/warnings/untyped_declaration=2
 
 window/stretch/scale=2.0
 
+[gui]
+
+timers/tooltip_delay_sec=0.0
+
 [input]
 
 move_forwards={
