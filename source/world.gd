@@ -26,8 +26,3 @@ func _ready() -> void:
 	var australian: Australian = australian_scene.instantiate()
 	australian.position = player.position + Vector3(0, 10, 5)
 	add_child(australian)
-	
-	
-
-func _process(delta: float) -> void:
-	pass

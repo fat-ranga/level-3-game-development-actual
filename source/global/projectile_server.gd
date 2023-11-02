@@ -2,6 +2,7 @@ extends Node
 
 var projectiles: Array[Projectile] = []
 
+# Because autoloads don't exist in the scene hierarchy to add the bullets.
 @onready var world = get_tree().get_current_scene()
 
 func spawn_projectile(position: Vector3, rotation: Vector3, projectile_scene: PackedScene) -> void:

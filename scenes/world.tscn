@@ -2,11 +2,14 @@
 
 [ext_resource type="Script" path="res://source/world.gd" id="1_whit5"]
 [ext_resource type="ArrayMesh" uid="uid://cxg21ydocvx0t" path="res://data/meshes/natives_nikau.res" id="2_i4ajs"]
+[ext_resource type="VoxelBlockyLibrary" uid="uid://mr7w7c3tfhgm" path="res://data/voxel_block_library.tres" id="2_ofqbv"]
+[ext_resource type="VoxelGeneratorNoise2D" uid="uid://bt2hyffnk5rws" path="res://data/voxel_2d_noise.tres" id="2_vi4jq"]
 [ext_resource type="ArrayMesh" uid="uid://bodhwux60hu67" path="res://data/meshes/natives_silver_fern.res" id="3_74fwo"]
 [ext_resource type="PackedScene" uid="uid://12bx43nfleo8" path="res://scenes/flora/nikau.tscn" id="3_p6bu4"]
 [ext_resource type="PackedScene" uid="uid://c466wpyskci5g" path="res://scenes/flora/kauri.tscn" id="5_7xyo0"]
 [ext_resource type="PackedScene" uid="uid://s0gnycogpfs0" path="res://scenes/player.tscn" id="5_ex6va"]
 [ext_resource type="Script" path="res://source/enemy_spawner.gd" id="7_c58ck"]
+[ext_resource type="PackedScene" uid="uid://bo7vkcnbk68pm" path="res://scenes/pc.tscn" id="10_dtci1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_uxvhl"]
 sky_top_color = Color(0.168627, 0.337255, 0.603922, 1)
@@ -24,6 +27,8 @@ ambient_light_color = Color(0.388235, 0.388235, 0.388235, 1)
 ambient_light_sky_contribution = 0.75
 tonemap_mode = 2
 glow_enabled = true
+glow_intensity = 1.0
+glow_map_strength = 1.0
 fog_enabled = true
 fog_light_color = Color(0.380392, 0.588235, 1, 1)
 fog_density = 0.0005
@@ -31,21 +36,8 @@ fog_sky_affect = 0.0
 volumetric_fog_density = 0.01
 volumetric_fog_sky_affect = 0.0
 
-[sub_resource type="Curve" id="Curve_blil8"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0703971, 0.136842), 0.0, 0.0, 0, 0, Vector2(0.126354, 0.347368), 0.0, 0.0, 0, 0, Vector2(0.240072, 0.2), 0.0, 0.0, 0, 0, Vector2(0.34296, 0.505263), 0.0, 0.0, 0, 0, Vector2(0.435018, 0.863158), 0.0, 0.0, 0, 0, Vector2(0.54902, 0.473684), -4.00667, -4.00667, 0, 0, Vector2(0.680505, 0.242105), 0.0, 0.0, 0, 0, Vector2(0.767148, 0.515789), 0.0, 0.0, 0, 0, Vector2(0.857401, 0.631579), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 11
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_fihqn"]
-frequency = 0.004
-
-[sub_resource type="VoxelGeneratorNoise2D" id="VoxelGeneratorNoise2D_7ick3"]
-channel = 0
-height_start = 0.0
-height_range = 64.0
-noise = SubResource("FastNoiseLite_fihqn")
-curve = SubResource("Curve_blil8")
-
-[sub_resource type="VoxelMesherTransvoxel" id="VoxelMesherTransvoxel_bgldc"]
+[sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_3qibb"]
+library = ExtResource("2_ofqbv")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_as4ia"]
 transparency = 2
@@ -101,10 +93,9 @@ transform = Transform3D(-0.866024, -0.433015, 0.250001, -0.0139859, 0.520783, 0.
 shadow_enabled = true
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="."]
-generator = SubResource("VoxelGeneratorNoise2D_7ick3")
-mesher = SubResource("VoxelMesherTransvoxel_bgldc")
+generator = ExtResource("2_vi4jq")
+mesher = SubResource("VoxelMesherBlocky_3qibb")
 bounds = AABB(-8192, 0, -8192, 16384, 256, 16384)
-max_view_distance = 512
 collision_mask = 7
 material_override = SubResource("StandardMaterial3D_as4ia")
 mesh_block_size = 32
@@ -113,9 +104,12 @@ mesh_block_size = 32
 library = SubResource("VoxelInstanceLibrary_qrji1")
 
 [node name="Player" parent="." instance=ExtResource("5_ex6va")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 78.5161, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.2597, 124.739, -6.42726)
 
 [node name="EnemySpawner" type="Node3D" parent="." node_paths=PackedStringArray("player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80.959, 0, 44.342)
 script = ExtResource("7_c58ck")
 player = NodePath("../Player")
+
+[node name="PC" parent="." instance=ExtResource("10_dtci1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 55, -7)

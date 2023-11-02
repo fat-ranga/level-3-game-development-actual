@@ -1,13 +1,29 @@
-[gd_scene load_steps=4 format=3 uid="uid://5eoiscevlbw1"]
+[gd_scene load_steps=6 format=3 uid="uid://5eoiscevlbw1"]
 
 [ext_resource type="Script" path="res://source/main.gd" id="1_4iu4q"]
 [ext_resource type="PackedScene" uid="uid://ct4a2mphhsued" path="res://scenes/ui/main_menu.tscn" id="2_c1qpv"]
+[ext_resource type="Shader" path="res://source/colourblind.gdshader" id="2_s82n5"]
 [ext_resource type="Script" path="res://source/utility/texture_atlas_packer.gd" id="3_qrw1f"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rx4ih"]
+shader = ExtResource("2_s82n5")
+shader_parameter/mode = 3
+shader_parameter/intensity = 1.0
 
 [node name="Main" type="Node"]
 script = ExtResource("1_4iu4q")
 
-[node name="MainMenu" parent="." instance=ExtResource("2_c1qpv")]
+[node name="MainMenu" parent="." node_paths=PackedStringArray("colourblind_correction") instance=ExtResource("2_c1qpv")]
+colourblind_correction = NodePath("../ColourblindCorrection")
 
 [node name="TextureAtlasPacker" type="Node" parent="."]
 script = ExtResource("3_qrw1f")
+
+[node name="ColourblindCorrection" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_rx4ih")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

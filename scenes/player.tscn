@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://s0gnycogpfs0"]
+[gd_scene load_steps=18 format=3 uid="uid://s0gnycogpfs0"]
 
 [ext_resource type="Script" path="res://source/player.gd" id="1_hb35k"]
 [ext_resource type="AudioStream" uid="uid://5buecktduga4" path="res://data/audio/46-tui-morning-chorus.mp3" id="2_51e1f"]
@@ -6,7 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://lowth72rl5nn" path="res://data/textures/ui/crosshair.png" id="3_j7ilq"]
 [ext_resource type="Theme" uid="uid://1c1e156uchg8" path="res://data/theme/kiwicraft_theme.tres" id="5_t6gbb"]
 [ext_resource type="Script" path="res://source/ui/player_ui.gd" id="7_jb10p"]
+[ext_resource type="Texture2D" uid="uid://b0dhjxvrd802v" path="res://data/textures/ui/tile.png" id="8_4p1wd"]
 [ext_resource type="Texture2D" uid="uid://bv71p3ne6gx4o" path="res://data/textures/ui/tile_opaque.png" id="8_uyng6"]
+[ext_resource type="PackedScene" uid="uid://cb0nl2g6d48uv" path="res://scenes/ui/pc_menu.tscn" id="10_mm3p5"]
 [ext_resource type="Texture2D" uid="uid://cw4tl6x1qahf1" path="res://data/textures/ui/square_with_margin.png" id="11_klbso"]
 [ext_resource type="PackedScene" uid="uid://do7yimy34vikt" path="res://scenes/ui/item_slot.tscn" id="12_4e11v"]
 
@@ -30,12 +32,13 @@ width = 8
 [sub_resource type="LabelSettings" id="LabelSettings_655vd"]
 font_color = Color(0.65098, 0.65098, 0.65098, 1)
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("inventory")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("inventory", "raycast")]
 collision_layer = 2
-collision_mask = 7
+collision_mask = 15
 wall_min_slide_angle = 0.0
 script = ExtResource("1_hb35k")
 inventory = NodePath("Inventory")
+raycast = NodePath("CameraBase/Camera/RayCast3D")
 
 [node name="Inventory" parent="." instance=ExtResource("2_b2gw0")]
 width = 9
@@ -59,6 +62,10 @@ view_distance = 256
 
 [node name="ArmsBase" type="Node3D" parent="CameraBase/Camera"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="CameraBase/Camera"]
+target_position = Vector3(0, 0, -4)
+collision_mask = 13
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_51e1f")
@@ -131,6 +138,40 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("3_j7ilq")
 expand_mode = 1
+
+[node name="InteractPrompt" type="MarginContainer" parent="UI/MarginContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="NinePatchRect" type="NinePatchRect" parent="UI/MarginContainer/InteractPrompt"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("8_4p1wd")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/InteractPrompt"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="hboxau" type="HBoxContainer" parent="UI/MarginContainer/InteractPrompt/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="RichTextLabel" parent="UI/MarginContainer/InteractPrompt/MarginContainer/hboxau"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Press [color=light_blue] F [/color] to interact..."
+fit_content = true
+autowrap_mode = 0
 
 [node name="DarkenBackground" type="TextureRect" parent="UI/MarginContainer"]
 unique_name_in_owner = true
@@ -302,3 +343,6 @@ layout_mode = 2
 
 [node name="MarginContainer3" type="MarginContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer"]
 layout_mode = 2
+
+[node name="PCMenu" parent="UI" instance=ExtResource("10_mm3p5")]
+visible = false

@@ -17,7 +17,7 @@ theme = ExtResource("1_2q0m0")
 script = ExtResource("1_avhyg")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
-custom_minimum_size = Vector2(140, 100)
+custom_minimum_size = Vector2(217, 104)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -51,12 +51,32 @@ layout_mode = 2
 size_flags_horizontal = 3
 min_value = 1.0
 max_value = 4.0
-value = 1.0
+value = 2.0
 
 [node name="Number" type="Label" parent="All/Settings/UIScale"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "1"
+text = "2"
+
+[node name="Colourblind" type="HBoxContainer" parent="All/Settings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="All/Settings/Colourblind"]
+layout_mode = 2
+text = "Colourblind mode"
+
+[node name="OptionButton" type="OptionButton" parent="All/Settings/Colourblind"]
+layout_mode = 2
+item_count = 4
+selected = 3
+popup/item_0/text = "Protanopia"
+popup/item_0/id = 0
+popup/item_1/text = "Deuteranopia"
+popup/item_1/id = 1
+popup/item_2/text = "Tritanopia"
+popup/item_2/id = 2
+popup/item_3/text = "None"
+popup/item_3/id = 3
 
 [node name="Apply" type="Button" parent="All/Settings"]
 layout_mode = 2
@@ -78,3 +98,6 @@ layout_mode = 2
 text = "Back"
 
 [connection signal="value_changed" from="All/Settings/UIScale/HSlider" to="." method="_on_h_slider_value_changed"]
+[connection signal="item_selected" from="All/Settings/Colourblind/OptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="pressed" from="All/Settings/Apply" to="." method="_on_apply_pressed"]
+[connection signal="pressed" from="All/Separator/Back" to="." method="_on_back_pressed"]

@@ -4,6 +4,8 @@ class_name MainMenu
 
 signal start_game
 
+@export var colourblind_correction: ColorRect
+
 @onready var buttons: VBoxContainer = $Buttons
 @onready var settings_menu: SettingsMenu = $SettingsMenu
 @onready var singleplayer: Button = $Buttons/Singleplayer
@@ -20,6 +22,9 @@ signal start_game
 
 func _ready() -> void:
 	singleplayer.grab_focus()
+	
+	Settings.settings_updated.connect(_update_settings)
+	settings_menu.back_button_pressed.connect(_settings_menu_back)
 	
 	for world in world_buttons.get_children():
 		world.focus_entered.connect(_world_selected)
@@ -43,6 +48,8 @@ func _input(event: InputEvent) -> void:
 		world_select.hide()
 		buttons.show()
 
+func _update_settings() -> void:
+	colourblind_correction.material.set_shader_parameter("mode", Settings.colourblind_mode)
 
 # MAIN MENU
 
@@ -52,6 +59,10 @@ func _on_singleplayer_pressed() -> void:
 func _on_settings_pressed() -> void:
 	buttons.hide()
 	settings_menu.show()
+
+func _settings_menu_back() -> void:
+	settings_menu.hide()
+	buttons.show()
 
 func _on_exit_pressed() -> void:
 	get_tree().quit()

@@ -4,6 +4,7 @@ class_name Player
 
 signal update_ui
 signal inventory_toggled
+signal interact_pressed
 
 const SPEED: float = 3.0
 const JUMP_VELOCITY: float = 9.0
@@ -11,12 +12,15 @@ const GRAVITY: float = -14.0
 
 var health: int = 100
 var is_in_menu: bool = false
+var is_pc_selectable: bool = false
+
+@export var inventory: Inventory
+@export var raycast: RayCast3D
 
 @onready var camera: Camera3D = $CameraBase/Camera
 @onready var camera_base: Node3D = $CameraBase
 @onready var initial_camera_base_position: Vector3 = camera_base.position - position
 @onready var arms_base: Node3D = $CameraBase/Camera/ArmsBase
-@export var inventory: Inventory
 @onready var ui: CanvasLayer = $UI
 
 
@@ -26,9 +30,9 @@ func _ready() -> void:
 	inventory.add_item(ItemDatabase.new_item("9x18"))
 	inventory.add_item(ItemDatabase.new_item("7.62x39"))
 	inventory.add_item(ItemDatabase.new_item("9x18"))
-	var sigma: Item = ItemDatabase.new_item("7.62x39")
-	sigma.current_amount = 72
-	inventory.add_item(sigma)
+	var cool_item: Item = ItemDatabase.new_item("7.62x39")
+	cool_item.current_amount = 72
+	inventory.add_item(cool_item)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_inventory"):
@@ -36,9 +40,10 @@ func _input(event: InputEvent) -> void:
 		
 	if event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	
 	if event.is_action_pressed("ui_home"):
 		damage(7)
+	if event.is_action_pressed("interact"):
+		interact_pressed.emit()
 		
 	if is_in_menu:
 		return
@@ -76,6 +81,15 @@ func _physics_process(delta: float) -> void:
 		velocity.z *= 0.7
 		move_and_slide()
 		return
+	
+	var collider: Object = raycast.get_collider()
+	if collider:
+		if collider.is_in_group("PC"):
+			is_pc_selectable = true
+		else:
+			is_pc_selectable = false
+	else:
+		is_pc_selectable = false
 	
 	# Handle jump.
 	if Input.is_action_pressed("jump") and is_on_floor():

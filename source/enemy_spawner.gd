@@ -40,7 +40,7 @@ func _update_enemies(delta: float) -> void:
 			enemies[i].current_fire_timer = enemies[i].max_fire_timer
 			
 		
-		enemies[i].look_at(player.position)
+		enemies[i].look_at(player.position + -enemies[i].basis.z)
 		enemies[i].rotation.x = 0
 		enemies[i].rotation.z = 0
 		enemies[i].velocity.x = -enemies[i].basis.z.x * delta * SPEED

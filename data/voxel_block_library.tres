@@ -1,4 +1,4 @@
-[gd_resource type="VoxelBlockyLibrary" load_steps=4 format=3 uid="uid://mr7w7c3tfhgm"]
+[gd_resource type="VoxelBlockyLibrary" load_steps=3 format=3 uid="uid://mr7w7c3tfhgm"]
 
 [sub_resource type="VoxelBlockyModelEmpty" id="VoxelBlockyModelEmpty_04pu4"]
 
@@ -11,8 +11,5 @@ tile_top = Vector2i(3, 1)
 tile_back = Vector2i(0, 1)
 tile_front = Vector2i(0, 1)
 
-[sub_resource type="VoxelBlockyModelMesh" id="VoxelBlockyModelMesh_smtse"]
-collision_aabbs = Array[AABB]([AABB(0, 0, 0, 1, 1, 1)])
-
 [resource]
-models = Array[VoxelBlockyModel]([SubResource("VoxelBlockyModelEmpty_04pu4"), SubResource("VoxelBlockyModelCube_4npgl"), SubResource("VoxelBlockyModelMesh_smtse")])
+models = Array[VoxelBlockyModel]([SubResource("VoxelBlockyModelEmpty_04pu4"), SubResource("VoxelBlockyModelCube_4npgl")])
