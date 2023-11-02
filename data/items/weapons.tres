@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemDatabaseResource" load_steps=5 format=3 uid="uid://blmo1kjevhy1l"]
 
-[ext_resource type="Texture2D" uid="uid://2rjuotyhy1e0" path="res://data/textures/ui/icons/default.png" id="1_a0m3b"]
+[ext_resource type="Texture2D" uid="uid://c45qxsed65xbs" path="res://data/textures/ui/icons/ak_47.png" id="1_ow4u4"]
 [ext_resource type="Script" path="res://source/resources/item_database_resource.gd" id="1_xty8f"]
 [ext_resource type="Script" path="res://source/resources/gun.gd" id="2_8ldmd"]
 
@@ -9,7 +9,8 @@ script = ExtResource("2_8ldmd")
 id = &"ak_47"
 name = "AK-47"
 max_amount = 64
-icon = ExtResource("1_a0m3b")
+icon = ExtResource("1_ow4u4")
+tooltip_text = "An item."
 current_amount = 0
 
 [resource]

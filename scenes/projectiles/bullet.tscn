@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://8caxcv1fthor"]
+
+[ext_resource type="Material" uid="uid://b2yb4humqey7b" path="res://data/materials/bullet_emission.tres" id="1_2wnne"]
+[ext_resource type="Script" path="res://source/projectiles/bullet.gd" id="2_hy3up"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_b4yx8"]
+material = ExtResource("1_2wnne")
+size = Vector3(0.1, 0.1, 1)
+
+[node name="Projectile" type="MeshInstance3D"]
+cast_shadow = 0
+mesh = SubResource("BoxMesh_b4yx8")
+script = ExtResource("2_hy3up")

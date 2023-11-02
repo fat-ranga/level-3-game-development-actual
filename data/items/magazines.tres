@@ -13,6 +13,7 @@ id = &"banana_mag"
 name = "Banana Mag"
 max_amount = 1
 icon = ExtResource("1_l1rum")
+tooltip_text = "An item."
 current_amount = 0
 
 [resource]

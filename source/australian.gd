@@ -3,19 +3,19 @@ extends CharacterBody3D
 class_name Australian
 
 var health: int = 100
+var max_fire_timer: int = 60
+var current_fire_timer: int = max_fire_timer
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+@export var animation_player: AnimationPlayer
+@export var muzzle: Node3D
 
+@onready var projectile_scene = preload("res://scenes/projectiles/bullet.tscn")
 
-func _physics_process(delta: float) -> void:
-	velocity.y = -9.8
+# Functionality handled by EnemySpawner.
+
+func damage(amount: int) -> void:
+	health -= amount
+
+func fire() -> void:
+	ProjectileServer.spawn_projectile(muzzle.global_position, muzzle.global_rotation, projectile_scene)
 	
-	move_and_slide()
-
-func damage() -> void:
-	pass
-
-func _die() -> void:
-	pass

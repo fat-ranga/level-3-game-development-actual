@@ -22,8 +22,8 @@ config/windows_native_icon="res://icon.ico"
 
 Constants="*res://source/global/constants.gd"
 Settings="*res://source/global/settings.gd"
-Mod="*res://source/global/mod.gd"
 ItemDatabase="*res://source/global/item_database_autoload.gd"
+ProjectileServer="*res://source/global/projectile_server.gd"
 
 [debug]
 

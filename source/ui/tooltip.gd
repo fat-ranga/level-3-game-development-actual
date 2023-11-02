@@ -2,7 +2,7 @@ extends MarginContainer
 
 class_name Tooltip
 
-@export var label: Label
+@export var label: RichTextLabel
 
 func set_text(tooltip_text: String) -> void:
 	label.text = tooltip_text

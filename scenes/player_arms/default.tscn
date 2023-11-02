@@ -1,0 +1,52 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckxnjpif6eggb"]
+
+[ext_resource type="PackedScene" uid="uid://b2eg3f21aakko" path="res://data/import/fps_arms.gltf" id="1_j4m81"]
+[ext_resource type="Material" uid="uid://pjy8hkjjd8o5" path="res://data/material_overrides/human_override.tres" id="2_s225h"]
+
+[node name="fps_arms" instance=ExtResource("1_j4m81")]
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/0/rotation = Quaternion(0.187011, -0.103449, -0.844875, 0.490419)
+bones/1/rotation = Quaternion(0.00234136, 0.0991562, -0.000372079, 0.995069)
+bones/2/position = Vector3(1.02286, -0.807868, 0.474645)
+bones/2/rotation = Quaternion(0.205868, -0.715168, -0.667616, -0.0210452)
+bones/3/rotation = Quaternion(-0.504124, -0.502299, -0.509967, 0.483207)
+bones/4/rotation = Quaternion(-0.699827, 0.00596602, -0.00326207, 0.71428)
+bones/5/rotation = Quaternion(-0.742661, -0.00120468, 0.00120575, 0.669665)
+bones/6/rotation = Quaternion(-0.474802, -0.50318, -0.510104, 0.511045)
+bones/7/rotation = Quaternion(-0.731879, -0.0231149, 0.0276868, 0.68048)
+bones/8/rotation = Quaternion(-0.750002, 0.0145606, -0.0136475, 0.661134)
+bones/9/rotation = Quaternion(-0.499195, -0.495722, -0.515373, 0.489341)
+bones/10/rotation = Quaternion(-0.720581, -0.0035272, 0.00388636, 0.693351)
+bones/11/rotation = Quaternion(-0.718607, 0.00528458, -0.0051786, 0.695377)
+bones/12/rotation = Quaternion(-0.468351, -0.500731, -0.576943, 0.443905)
+bones/13/rotation = Quaternion(-0.71185, -0.0518435, -0.00134991, 0.700415)
+bones/14/rotation = Quaternion(-0.70129, -0.0443304, -0.0318128, 0.710785)
+bones/15/rotation = Quaternion(0.331477, 0.0315801, -0.21672, 0.917692)
+bones/16/rotation = Quaternion(-0.757689, -0.0464256, -0.00973816, 0.650889)
+bones/17/rotation = Quaternion(-0.551317, 0.0439026, 0.0373755, 0.832301)
+bones/18/rotation = Quaternion(0.0937623, 0.09611, 0.72059, 0.680236)
+bones/19/rotation = Quaternion(0.00259705, -0.00205075, -0.000976712, 0.999994)
+bones/20/position = Vector3(-1.09182, -0.351816, 0.351727)
+bones/20/rotation = Quaternion(0.135684, 0.670809, 0.689182, 0.237978)
+bones/21/rotation = Quaternion(-0.487671, 0.519084, 0.492872, 0.499806)
+bones/22/rotation = Quaternion(-0.675532, -0.00585353, 0.00345998, 0.7373)
+bones/23/rotation = Quaternion(-0.719835, 0.00116357, -0.00124537, 0.694143)
+bones/24/rotation = Quaternion(-0.457434, 0.519969, 0.492979, 0.526648)
+bones/25/rotation = Quaternion(-0.708697, 0.0221754, -0.0284448, 0.70459)
+bones/26/rotation = Quaternion(-0.727457, -0.0140957, 0.0141272, 0.685863)
+bones/27/rotation = Quaternion(-0.48254, 0.512691, 0.498495, 0.505773)
+bones/28/rotation = Quaternion(-0.696974, 0.00339504, -0.00400213, 0.717077)
+bones/29/rotation = Quaternion(-0.694934, -0.0051084, 0.00535266, 0.719035)
+bones/30/rotation = Quaternion(-0.453234, 0.519758, 0.559863, 0.45933)
+bones/31/rotation = Quaternion(-0.688012, 0.0518596, -0.00038571, 0.723844)
+bones/32/rotation = Quaternion(-0.677111, 0.0453701, 0.0303115, 0.733855)
+bones/33/rotation = Quaternion(0.424114, 0.167448, 0.233346, 0.858859)
+bones/34/rotation = Quaternion(-0.417411, 0.0623602, 0.155952, 0.893061)
+bones/35/rotation = Quaternion(-0.518979, -0.143779, 0.0576517, 0.840634)
+
+[node name="Arms" parent="Armature/Skeleton3D" index="0"]
+material_override = ExtResource("2_s225h")
+
+[node name="AnimationPlayer" parent="." index="1"]
+autoplay = "idle"

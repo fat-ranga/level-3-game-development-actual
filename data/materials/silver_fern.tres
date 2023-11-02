@@ -1,6 +1,6 @@
 [gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://mqxlcwbhjhgs"]
 
-[ext_resource type="Texture2D" uid="uid://h4ovssbfudcp" path="res://data/textures/flora/fern_diffuse.png" id="1_oehcw"]
+[ext_resource type="Texture2D" uid="uid://bj1b0luehw8hs" path="res://data/textures/flora/fern_diffuse.png" id="1_oehcw"]
 
 [resource]
 resource_name = "silver_fern"
@@ -9,4 +9,6 @@ alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("1_oehcw")
+backlight_enabled = true
+backlight_texture = ExtResource("1_oehcw")
 texture_filter = 2

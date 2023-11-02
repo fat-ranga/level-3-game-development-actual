@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+class_name PlayerUI
+
 const max_colour: Color = Color(0.306, 0.459, 0.224) # Green.
 const min_colour: Color = Color(0.722, 0.176, 0.169) # Red.
 
@@ -18,6 +20,7 @@ const min_colour: Color = Color(0.722, 0.176, 0.169) # Red.
 
 var main_item_slots: Array[ItemSlot] = []
 var toolbar_slots: Array = [ItemSlot]
+var currently_held_icon: Icon
 
 func _ready() -> void:
 	player.update_ui.connect(_update_ui)
@@ -55,12 +58,14 @@ func _inventory_toggled() -> void:
 	crosshair.visible = not main_inventory.visible
 	if main_inventory.visible:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		player.is_in_menu = true
 	else:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		player.is_in_menu = false
+		for i in range(main_item_slots.size()):
+			main_item_slots[i].delete_tooltip()
 
 func _generate_inventory_ui() -> void:
-	print(player.inventory)
-	
 	# -1 because the last slot is for the toolbar.
 	for y in range(player.inventory.height - 1):
 		var new_h_box = HBoxContainer.new()
@@ -69,7 +74,9 @@ func _generate_inventory_ui() -> void:
 		slots_container.add_child(new_h_box)
 		
 		for x in range(player.inventory.width):
-			var new_slot: Button = item_slot_scene.instantiate()
+			var new_slot: ItemSlot = item_slot_scene.instantiate()
+			new_slot._item_icon.player_inventory = player.inventory
+			new_slot._item_icon.position_in_inventory = Vector2(x, y)
 			main_item_slots.append(new_slot)
 			new_h_box.add_child(new_slot)
 			
@@ -80,13 +87,17 @@ func _generate_inventory_ui() -> void:
 	toolbar_slots_container.add_child(new_h_box)
 	
 	for x in range(player.inventory.width):
-		var new_slot: Button = item_slot_scene.instantiate()
+		var new_slot: ItemSlot = item_slot_scene.instantiate()
+		new_slot._item_icon.player_inventory = player.inventory
+		new_slot._item_icon.position_in_inventory = Vector2(x, player.inventory.height)
 		main_item_slots.append(new_slot)
 		new_h_box.add_child(new_slot)
 	
 	# Generate the main visible toolbar.
 	for x in range(player.inventory.width):
-		var new_slot: Button = item_slot_scene.instantiate()
+		var new_slot: ItemSlot = item_slot_scene.instantiate()
+		new_slot._item_icon.player_inventory = player.inventory
+		new_slot._item_icon.position_in_inventory = Vector2(x, player.inventory.height)
 		toolbar_slots.append(new_slot)
 		toolbar.add_child(new_slot)
 		#var icon: Control = slot_icon_scene.instantiate()

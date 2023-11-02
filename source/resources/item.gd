@@ -7,6 +7,7 @@ class_name Item
 @export var name: String = "Default Item"
 @export var max_amount: int = 64
 @export var icon: CompressedTexture2D = preload("res://data/textures/ui/icons/default.png")
-@export var hand_scene: PackedScene
+@export var hand_scene: PackedScene = preload("res://scenes/player_arms/default.tscn")
+@export var tooltip_text: String = ""
 
 @export var current_amount: int = 1

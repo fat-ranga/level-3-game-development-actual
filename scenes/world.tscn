@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://d2eqichq2s0vl"]
+[gd_scene load_steps=25 format=3 uid="uid://d2eqichq2s0vl"]
 
 [ext_resource type="Script" path="res://source/world.gd" id="1_whit5"]
 [ext_resource type="ArrayMesh" uid="uid://cxg21ydocvx0t" path="res://data/meshes/natives_nikau.res" id="2_i4ajs"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://12bx43nfleo8" path="res://scenes/flora/nikau.tscn" id="3_p6bu4"]
 [ext_resource type="PackedScene" uid="uid://c466wpyskci5g" path="res://scenes/flora/kauri.tscn" id="5_7xyo0"]
 [ext_resource type="PackedScene" uid="uid://s0gnycogpfs0" path="res://scenes/player.tscn" id="5_ex6va"]
+[ext_resource type="Script" path="res://source/enemy_spawner.gd" id="7_c58ck"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_uxvhl"]
 sky_top_color = Color(0.168627, 0.337255, 0.603922, 1)
@@ -113,3 +114,8 @@ library = SubResource("VoxelInstanceLibrary_qrji1")
 
 [node name="Player" parent="." instance=ExtResource("5_ex6va")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 78.5161, 0)
+
+[node name="EnemySpawner" type="Node3D" parent="." node_paths=PackedStringArray("player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80.959, 0, 44.342)
+script = ExtResource("7_c58ck")
+player = NodePath("../Player")

@@ -17,10 +17,6 @@ func generate_texture_atlas_data(root_directory: String = Constants.TEXTURE_DIRE
 	var texture_atlas: ImageTexture = ImageTexture.create_from_image(atlas_image)
 	
 	atlas_image.save_png(Constants.DIRECTORY_LOCAL_EXECUTABLE + "atlas_frfr.png")
-	print("stuff au")
-	print(texture_ids)
-	print(texture_atlas_size_in_pixels)
-	print(atlas_size_in_blocks)
 	
 	# Corresponds to the DataType enum.
 	return [texture_atlas, texture_ids, Vector2i(atlas_size_in_blocks, atlas_size_in_blocks)]
@@ -41,7 +37,8 @@ func _load_textures(paths: PackedStringArray) -> Array:
 		
 		
 		# Read the actual file.
-		var new_image = Image.load_from_file(texture_path)
+		var new_image: Image = Image.load_from_file(texture_path)
+		#var new_image = .load(texture_path)
 		var image_size = new_image.get_size()
 		
 		# Move on to the next texture_path if this image is the wrong size.
@@ -54,7 +51,6 @@ func _load_textures(paths: PackedStringArray) -> Array:
 		# We have successfully loaded the image.
 		images_loaded += 1
 		image_array.append(new_image)
-		print(texture_path)
 		#print(texture_path)
 		
 		# Now we add the name of the file to TODO: finish
@@ -78,8 +74,6 @@ func _load_textures(paths: PackedStringArray) -> Array:
 	# Make the atlas the smallest power of two it can be to fit all the textures.
 	while (texture_atlas_size_in_pixels / Constants.TEXTURE_SIZE) * (texture_atlas_size_in_pixels / Constants.TEXTURE_SIZE) < image_array.size():
 		texture_atlas_size_in_pixels *= 2
-	
-	print(texture_atlas_size_in_pixels)
 	
 	print("Atlas Packer: " + str(images_loaded) + " images successfully loaded to atlas.")
 	print("Atlas Packer: " + str(images_not_loaded) + " files not loaded to atlas.")

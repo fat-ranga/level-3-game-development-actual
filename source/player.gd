@@ -5,7 +5,7 @@ class_name Player
 signal update_ui
 signal inventory_toggled
 
-const SPEED: float = 10.0
+const SPEED: float = 3.0
 const JUMP_VELOCITY: float = 9.0
 const GRAVITY: float = -14.0
 
@@ -17,25 +17,31 @@ var is_in_menu: bool = false
 @onready var initial_camera_base_position: Vector3 = camera_base.position - position
 @onready var arms_base: Node3D = $CameraBase/Camera/ArmsBase
 @export var inventory: Inventory
+@onready var ui: CanvasLayer = $UI
 
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
-	inventory.add_item(ItemDatabase.item["9x18"])
-	inventory.add_item(ItemDatabase.item["7.62x39"])
-	
-	var new_item: Item = ItemDatabase.item["9x18"]
-	new_item.current_amount = 4
-	inventory.add_item(new_item)
-	#inventory.add_item(ItemDatabase.item["ak_47"], 1)
-	print(inventory.items[0])
+	inventory.add_item(ItemDatabase.new_item("9x18"))
+	inventory.add_item(ItemDatabase.new_item("7.62x39"))
+	inventory.add_item(ItemDatabase.new_item("9x18"))
+	var sigma: Item = ItemDatabase.new_item("7.62x39")
+	sigma.current_amount = 72
+	inventory.add_item(sigma)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_inventory"):
-		is_in_menu = true
 		inventory_toggled.emit()
+		
+	if event.is_action_pressed("ui_cancel"):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	
+	if event.is_action_pressed("ui_home"):
+		damage(7)
+		
+	if is_in_menu:
+		return
 	if event is InputEventMouseMotion:
 		camera_base.rotate_y(-event.relative.x * 0.005)
 		camera.rotate_x(-event.relative.y * 0.005)
@@ -45,13 +51,6 @@ func _input(event: InputEvent) -> void:
 		arms_base.position.x += -event.relative.x * 0.002
 		arms_base.position.y += event.relative.y * 0.002
 		
-	
-	if event.is_action_pressed("ui_cancel"):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	
-	if event.is_action_pressed("ui_home"):
-		damage(7)
-		
 
 func _process(delta: float) -> void:
 	# TODO: delta time with previous pos and rot and lerp + slerp???
@@ -60,7 +59,7 @@ func _process(delta: float) -> void:
 	camera_base.global_position = global_position + initial_camera_base_position
 	arms_base.position = lerp(arms_base.position, Vector3(0.0, 0.0, 0.0), delta * 15.0)
 	
-	if Input.is_action_pressed("aim"):
+	if Input.is_action_pressed("aim") and not is_in_menu:
 		camera.fov = lerp(camera.fov, 50.0, delta * 15.0)
 	else:
 		camera.fov = lerp(camera.fov, 90.0, delta * 15.0)
@@ -68,8 +67,16 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
-			velocity.y += GRAVITY * delta * 2
-
+		velocity.y += GRAVITY * delta * 2
+	else:
+		velocity.y = -0.2
+	
+	if is_in_menu:
+		velocity.x *= 0.7
+		velocity.z *= 0.7
+		move_and_slide()
+		return
+	
 	# Handle jump.
 	if Input.is_action_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
@@ -85,8 +92,11 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("move_right"):
 		direction += camera_base.basis.x
 	
-	velocity.x = direction.x * SPEED
-	velocity.z = direction.z * SPEED
+	velocity.x += direction.x * SPEED
+	velocity.z += direction.z * SPEED
+	
+	velocity.x *= 0.7
+	velocity.z *= 0.7
 	
 	move_and_slide()
 
