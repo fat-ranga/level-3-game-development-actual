@@ -19,7 +19,7 @@ const min_colour: Color = Color(0.722, 0.176, 0.169) # Red.
 @onready var pc_menu: PCMenu = $PCMenu
 @onready var death_menu: MarginContainer = $DeathMenu
 @onready var main_stuff: MarginContainer = %MainStuff
-@onready var tooltip: MarginContainer = %Tooltip
+#@onready var tooltip: MarginContainer = %Tooltip
 @onready var interact_prompt: MarginContainer = %InteractPrompt
 @onready var crosshair: TextureRect = %Crosshair
 

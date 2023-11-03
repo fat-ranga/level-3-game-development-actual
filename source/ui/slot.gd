@@ -16,7 +16,6 @@ func set_slot_data(slot_data: SlotData) -> void:
 	var item_data = slot_data.item_data
 	item_data_for_tooltip = slot_data.item_data
 	texture_rect.texture = item_data.texture
-	# TODO tooltip maybe
 	
 	if slot_data.quantity > 1:
 		quantity_label.text = str(slot_data.quantity)
@@ -37,9 +36,28 @@ func _on_gui_input(event: InputEvent) -> void:
 
 
 func _on_mouse_entered() -> void:
-	tool_tip = tooltip_scene.instantiate()
-	add_child(tool_tip)
+	if texture_rect.texture:
+		tool_tip = tooltip_scene.instantiate()
+		
+		var tooltip_text_fr: String = ""
+		tooltip_text_fr += item_data_for_tooltip.name
+		
+		if item_data_for_tooltip.description:
+			tooltip_text_fr += "\n [color=#6e9aeb]"
+			tooltip_text_fr += item_data_for_tooltip.description
+			tooltip_text_fr += "[/color]"
+		if item_data_for_tooltip.get_class() == "Ammunition":
+			if item_data_for_tooltip.damage:
+				tooltip_text_fr += "\n Damage: [color=salmon]"
+				tooltip_text_fr += str(item_data_for_tooltip.damage)
+			
+		tool_tip.set_text(tooltip_text_fr)
+		
+		
+		
+		add_child(tool_tip)
 
 
 func _on_mouse_exited() -> void:
-	tool_tip.queue_free()
+	if tool_tip:
+		tool_tip.queue_free()
