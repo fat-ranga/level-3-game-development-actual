@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="InventoryData" load_steps=13 format=3 uid="uid://d2y1ggy3x2eof"]
+[gd_resource type="Resource" script_class="InventoryData" load_steps=15 format=3 uid="uid://d2y1ggy3x2eof"]
 
 [ext_resource type="Script" path="res://source/inventory/inventory_data.gd" id="1_wbjh0"]
 [ext_resource type="Resource" uid="uid://cspyvvwlswer7" path="res://data/items/voxels/nikau_wood.tres" id="2_7n8ie"]
@@ -7,6 +7,7 @@
 [ext_resource type="Resource" uid="uid://cvr7yul0u8lfx" path="res://data/items/ammunition/7.62x39.tres" id="4_mkklr"]
 [ext_resource type="Resource" uid="uid://ck4c16yubt114" path="res://data/items/flora/ponga_fern.tres" id="5_o1554"]
 [ext_resource type="Resource" uid="uid://dnuridwwcqugs" path="res://data/items/magazines/banana_mag.tres" id="5_shwil"]
+[ext_resource type="Resource" uid="uid://db6vvpfbjnwot" path="res://data/items/kiwi.tres" id="8_hyfcs"]
 
 [sub_resource type="Resource" id="Resource_vf8sk"]
 script = ExtResource("2_lqcqv")
@@ -33,6 +34,11 @@ script = ExtResource("2_lqcqv")
 item_data = ExtResource("5_o1554")
 quantity = 7
 
+[sub_resource type="Resource" id="Resource_pdlbe"]
+script = ExtResource("2_lqcqv")
+item_data = ExtResource("8_hyfcs")
+quantity = 1
+
 [resource]
 script = ExtResource("1_wbjh0")
-slot_datas = Array[ExtResource("2_lqcqv")]([null, null, SubResource("Resource_vf8sk"), null, null, SubResource("Resource_v0a3k"), SubResource("Resource_abc5k"), SubResource("Resource_wa3n2"), null, null, SubResource("Resource_cuks7"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+slot_datas = Array[ExtResource("2_lqcqv")]([null, null, SubResource("Resource_vf8sk"), null, null, SubResource("Resource_v0a3k"), SubResource("Resource_abc5k"), SubResource("Resource_wa3n2"), null, null, SubResource("Resource_cuks7"), null, null, null, SubResource("Resource_pdlbe"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])

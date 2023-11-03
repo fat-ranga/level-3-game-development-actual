@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://db6vvpfbjnwot"]
+
+[ext_resource type="PackedScene" uid="uid://ckxnjpif6eggb" path="res://scenes/player_arms/default.tscn" id="1_0qipl"]
+[ext_resource type="Script" path="res://source/resources/item_data.gd" id="2_kfc84"]
+[ext_resource type="Texture2D" uid="uid://sjieo2hcnis4" path="res://data/textures/creatures/kiwi/idle/r0_f0.png" id="3_sl178"]
+
+[resource]
+script = ExtResource("2_kfc84")
+name = "North Island Brown Kiwi"
+max_amount = 1
+texture = ExtResource("3_sl178")
+hand_scene = ExtResource("1_0qipl")
+description = "Just like KFC."

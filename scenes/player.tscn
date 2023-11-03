@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://s0gnycogpfs0"]
+[gd_scene load_steps=30 format=3 uid="uid://s0gnycogpfs0"]
 
 [ext_resource type="Script" path="res://source/player.gd" id="1_hb35k"]
 [ext_resource type="Resource" uid="uid://d2y1ggy3x2eof" path="res://data/items/test_inv.tres" id="2_37aom"]
@@ -15,7 +15,6 @@
 [ext_resource type="Script" path="res://source/inventory.gd" id="9_ergft"]
 [ext_resource type="PackedScene" uid="uid://cb0nl2g6d48uv" path="res://scenes/ui/pc_menu.tscn" id="10_mm3p5"]
 [ext_resource type="Texture2D" uid="uid://cw4tl6x1qahf1" path="res://data/textures/ui/square_with_margin.png" id="11_klbso"]
-[ext_resource type="PackedScene" uid="uid://c7s3ragfiwwcf" path="res://scenes/ui/tooltip.tscn" id="11_pqohr"]
 [ext_resource type="PackedScene" uid="uid://do7yimy34vikt" path="res://scenes/ui/slot.tscn" id="12_1tw2e"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bcag7"]
@@ -1885,10 +1884,6 @@ text = "Back to Main Menu"
 [node name="ExitGame" type="Button" parent="UI/DeathMenu/VBoxContainer/Buttons"]
 layout_mode = 2
 text = "Exit game"
-
-[node name="Tooltip" parent="UI" instance=ExtResource("11_pqohr")]
-unique_name_in_owner = true
-visible = false
 
 [connection signal="animation_finished" from="CameraBase/Camera/ArmsBase/fps_arms/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="drop_slot_data" from="UI/InventoryInterface" to="." method="_on_inventory_interface_drop_slot_data"]
