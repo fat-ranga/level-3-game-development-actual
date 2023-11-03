@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Recipe" load_steps=4 format=3 uid="uid://cffov2rw7i08t"]
+
+[ext_resource type="Script" path="res://source/resources/recipe_data.gd" id="1_d0dnj"]
+[ext_resource type="Resource" uid="uid://ck4c16yubt114" path="res://data/items/flora/ponga_fern.tres" id="1_ig45w"]
+[ext_resource type="Resource" uid="uid://blmammo5xal8c" path="res://data/items/weapons/ak_47.tres" id="2_d2kkt"]
+
+[resource]
+script = ExtResource("1_d0dnj")
+ingredients = Array[Resource("res://source/resources/item_data.gd")]([ExtResource("1_ig45w"), ExtResource("1_ig45w"), ExtResource("1_ig45w")])
+output = ExtResource("2_d2kkt")

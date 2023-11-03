@@ -11,32 +11,24 @@ const min_colour: Color = Color(0.722, 0.176, 0.169) # Red.
 
 @onready var healthbar: TextureProgressBar = %Healthbar
 @onready var health_bar_number: Label = %HealthBarNumber
-@onready var crosshair: TextureRect = $MarginContainer/Crosshair
 @onready var main_inventory: MarginContainer = %MainInventory
 @onready var slots_container: VBoxContainer = %SlotsContainer
 @onready var toolbar_slots_container: VBoxContainer = %ToolbarSlotsContainer
 @onready var darken_background: TextureRect = %DarkenBackground
 @onready var toolbar: HBoxContainer = %Toolbar
 @onready var pc_menu: PCMenu = $PCMenu
-@onready var interact_prompt: MarginContainer = $MarginContainer/InteractPrompt
 @onready var death_menu: MarginContainer = $DeathMenu
-@onready var regular_menu: MarginContainer = $MarginContainer
-
-
-@onready var item_slot_scene: PackedScene = preload("res://scenes/ui/item_slot.tscn")
-
-var main_item_slots: Array[ItemSlot] = []
-var toolbar_slots: Array = [ItemSlot]
-var currently_held_icon: Icon
+@onready var main_stuff: MarginContainer = %MainStuff
+@onready var tooltip: MarginContainer = %Tooltip
+@onready var interact_prompt: MarginContainer = %InteractPrompt
+@onready var crosshair: TextureRect = %Crosshair
 
 func _ready() -> void:
 	player.update_ui.connect(_update_ui)
 	player.inventory_toggled.connect(_inventory_toggled)
-	player.inventory.item_set.connect(_update_grid_icons)
 	player.interact_pressed.connect(_on_interact_pressed)
 	player.died.connect(_on_player_died)
 	
-	_generate_inventory_ui()
 	_update_ui()
 
 func _physics_process(delta: float) -> void:
@@ -47,18 +39,13 @@ func _physics_process(delta: float) -> void:
 		interact_prompt.hide()
 		crosshair.show()
 
-func _process(delta: float) -> void:
-	if currently_held_icon == null:
-		return
-	currently_held_icon.global_position = get_viewport().get_mouse_position()
-
 func _update_ui() -> void:
 	healthbar.value = player.health
 	health_bar_number.text = str(healthbar.value)
 	healthbar.tint_progress = lerp(min_colour, max_colour, (healthbar.value / 100))
 
 func _on_player_died() -> void:
-	regular_menu.hide()
+	main_stuff.hide()
 	death_menu.show()
 	player.is_in_menu = true
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -71,23 +58,6 @@ func _on_interact_pressed() -> void:
 		player.is_in_menu = true
 		pc_menu.show()
 
-func _update_grid_icons() -> void:
-	# First, delete all icons we currently have.
-	for i in range(main_item_slots.size()):
-		main_item_slots[i].remove_item_icon()
-	
-	# Loop through and add icons to each slot based on item
-	# type and number.
-	for i in range(main_item_slots.size()):
-		var item_ref: Item = player.inventory.items[i]
-		
-		# If there is no item in the slot, remove the icon and leave the slot blank.
-		if not item_ref:
-			main_item_slots[i].remove_item_icon()
-			continue
-		
-		main_item_slots[i].set_item_icon(item_ref)
-
 func _inventory_toggled() -> void:
 	main_inventory.visible = not main_inventory.visible
 	darken_background.visible = main_inventory.visible
@@ -98,55 +68,8 @@ func _inventory_toggled() -> void:
 	else:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		player.is_in_menu = false
-		for i in range(main_item_slots.size()):
-			main_item_slots[i].delete_tooltip()
-
-func _generate_inventory_ui() -> void:
-	# -1 because the last slot is for the toolbar.
-	for y in range(player.inventory.height - 1):
-		var new_h_box = HBoxContainer.new()
-		new_h_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		new_h_box.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-		slots_container.add_child(new_h_box)
-		
-		for x in range(player.inventory.width):
-			var new_slot: ItemSlot = item_slot_scene.instantiate()
-			new_slot.icon_pressed.connect(_on_icon_pressed)
-			new_slot._item_icon.player_inventory = player.inventory
-			new_slot._item_icon.position_in_inventory = Vector2(x, y)
-			main_item_slots.append(new_slot)
-			new_h_box.add_child(new_slot)
-			
-	# Generate the INVENTORY toolbar slot, not the one at the bottom of the screen.
-	var new_h_box = HBoxContainer.new()
-	new_h_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	new_h_box.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	toolbar_slots_container.add_child(new_h_box)
-	
-	for x in range(player.inventory.width):
-		var new_slot: ItemSlot = item_slot_scene.instantiate()
-		new_slot.icon_pressed.connect(_on_icon_pressed)
-		new_slot._item_icon.player_inventory = player.inventory
-		new_slot._item_icon.position_in_inventory = Vector2(x, player.inventory.height)
-		main_item_slots.append(new_slot)
-		new_h_box.add_child(new_slot)
-	
-	# Generate the main visible toolbar.
-	for x in range(player.inventory.width):
-		var new_slot: ItemSlot = item_slot_scene.instantiate()
-		new_slot.icon_pressed.connect(_on_icon_pressed)
-		new_slot._item_icon.player_inventory = player.inventory
-		new_slot._item_icon.position_in_inventory = Vector2(x, player.inventory.height)
-		toolbar_slots.append(new_slot)
-		toolbar.add_child(new_slot)
-		#var icon: Control = slot_icon_scene.instantiate()
-		#new_slot.add_child(icon)
-
-func _on_icon_pressed(icon: Icon) -> void:
-	if currently_held_icon:
-		currently_held_icon.is_following_mouse = false # Previous.
-	currently_held_icon = icon
-	currently_held_icon.is_following_mouse = true # New.
+		#for i in range(main_item_slots.size()):
+		#	main_item_slots[i].delete_tooltip()
 
 func _on_main_menu_pressed() -> void:
 	main_menu_button_pressed.emit()

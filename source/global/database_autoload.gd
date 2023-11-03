@@ -10,35 +10,36 @@ var item: Dictionary = {}
 var recipe: Dictionary = {}
 
 func _ready() -> void:
-	load_databases()
+	pass
+	#load_items()
+	#load_recipes()
 
-func new_item(id: StringName) -> Item:
-	# Make a deep copy of the resource, so that subresources such as magazines in AKs are not shared.
-	return item[id].duplicate(true)
-
-
-# Startup function to add all our stuff to a dictionary to make things accessible from elsewhere.
-func generate_item_data_base_dictionary(item_database: Array[Item]) -> void:
-	for i in range(item_database.size()):
-		if item_database[i] == null:
-			return
-		item[item_database[i].id] = item_database[i]
-
-func generate_recipe_data_base_dictionary(recipe_database: Array[Recipe]) -> void:
-	for i in range(recipe_database.size()):
-		if recipe_database[i] == null:
-			return
-		recipe[recipe_database[i].id] = recipe_database[i]
-
-func load_databases() -> void:
-	var paths: PackedStringArray = _get_file_paths_in_directory(item_data_dir)
-	
-	for path in paths:
-		var database: DatabaseResource = load(path)
-		
-		generate_item_data_base_dictionary(database.item_database)
-		generate_recipe_data_base_dictionary(database.recipe_database)
-		
+#func new_item(id: StringName) -> Item:
+#	# Make a deep copy of the resource, so that subresources such as magazines in AKs are not shared.
+#	return item[id].duplicate(true)
+#
+## Startup function to add all our stuff to a dictionary to make things accessible from elsewhere.
+#func generate_item_data_base_dictionary(item_database: Array[Item]) -> void:
+#	for i in range(item_database.size()):
+#		if item_database[i] == null:
+#			return
+#		item[item_database[i].id] = item_database[i]
+#
+#func generate_recipe_data_base_dictionary(recipe_database: Array[Recipe]) -> void:
+#	for i in range(recipe_database.size()):
+#		if recipe_database[i] == null:
+#			return
+#		recipe[recipe_database[i].id] = recipe_database[i]
+#
+#func load_databases() -> void:
+#	var paths: PackedStringArray = _get_file_paths_in_directory(item_data_dir)
+#
+#	for path in paths:
+#		var database: DatabaseResource = load(path)
+#
+#		generate_item_data_base_dictionary(database.item_database)
+#		generate_recipe_data_base_dictionary(database.recipe_database)
+#
 
 
 

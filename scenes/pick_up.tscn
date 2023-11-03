@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://bk0fasaji6quy"]
+
+[ext_resource type="Texture2D" uid="uid://bmxb8awhhvulm" path="res://data/textures/ui/icons/bullet_7.62x39.png" id="1_8sf8y"]
+[ext_resource type="Script" path="res://source/pick_up.gd" id="1_k1yv7"]
+[ext_resource type="AudioStream" uid="uid://c5jhndq42if1c" path="res://data/audio/item_pick_up.wav" id="3_li786"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_3fqkp"]
+radius = 0.25
+
+[node name="PickUp" type="RigidBody3D"]
+collision_layer = 0
+collision_mask = 9
+lock_rotation = true
+script = ExtResource("1_k1yv7")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+pixel_size = 0.04
+texture_filter = 0
+texture = ExtResource("1_8sf8y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_3fqkp")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_3fqkp")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_li786")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="finished" from="AudioStreamPlayer3D" to="." method="_on_audio_stream_player_3d_finished"]

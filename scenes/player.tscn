@@ -1,16 +1,20 @@
-[gd_scene load_steps=18 format=3 uid="uid://s0gnycogpfs0"]
+[gd_scene load_steps=22 format=3 uid="uid://s0gnycogpfs0"]
 
 [ext_resource type="Script" path="res://source/player.gd" id="1_hb35k"]
+[ext_resource type="Resource" uid="uid://d2y1ggy3x2eof" path="res://data/items/test_inv.tres" id="2_37aom"]
 [ext_resource type="AudioStream" uid="uid://5buecktduga4" path="res://data/audio/46-tui-morning-chorus.mp3" id="2_51e1f"]
-[ext_resource type="PackedScene" uid="uid://b7dkl7yx2u0xh" path="res://scenes/inventory.tscn" id="2_b2gw0"]
 [ext_resource type="Texture2D" uid="uid://lowth72rl5nn" path="res://data/textures/ui/crosshair.png" id="3_j7ilq"]
+[ext_resource type="Script" path="res://source/inventory/inventory_interface.gd" id="5_k8wke"]
 [ext_resource type="Theme" uid="uid://1c1e156uchg8" path="res://data/theme/kiwicraft_theme.tres" id="5_t6gbb"]
 [ext_resource type="Script" path="res://source/ui/player_ui.gd" id="7_jb10p"]
+[ext_resource type="Script" path="res://source/ui/toolbar.gd" id="8_0h4bp"]
 [ext_resource type="Texture2D" uid="uid://b0dhjxvrd802v" path="res://data/textures/ui/tile.png" id="8_4p1wd"]
 [ext_resource type="Texture2D" uid="uid://bv71p3ne6gx4o" path="res://data/textures/ui/tile_opaque.png" id="8_uyng6"]
+[ext_resource type="Script" path="res://source/inventory.gd" id="9_ergft"]
 [ext_resource type="PackedScene" uid="uid://cb0nl2g6d48uv" path="res://scenes/ui/pc_menu.tscn" id="10_mm3p5"]
 [ext_resource type="Texture2D" uid="uid://cw4tl6x1qahf1" path="res://data/textures/ui/square_with_margin.png" id="11_klbso"]
-[ext_resource type="PackedScene" uid="uid://do7yimy34vikt" path="res://scenes/ui/item_slot.tscn" id="12_4e11v"]
+[ext_resource type="PackedScene" uid="uid://c7s3ragfiwwcf" path="res://scenes/ui/tooltip.tscn" id="11_pqohr"]
+[ext_resource type="PackedScene" uid="uid://do7yimy34vikt" path="res://scenes/ui/slot.tscn" id="12_1tw2e"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bcag7"]
 size = Vector3(0.6, 1.8, 0.6)
@@ -32,17 +36,14 @@ width = 8
 [sub_resource type="LabelSettings" id="LabelSettings_655vd"]
 font_color = Color(0.65098, 0.65098, 0.65098, 1)
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("inventory", "raycast") groups=["Player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("raycast", "inventory_interface") groups=["Player"]]
 collision_layer = 2
 collision_mask = 15
 wall_min_slide_angle = 0.0
 script = ExtResource("1_hb35k")
-inventory = NodePath("Inventory")
 raycast = NodePath("CameraBase/Camera/RayCast3D")
-
-[node name="Inventory" parent="." instance=ExtResource("2_b2gw0")]
-width = 9
-height = 4
+inventory_data = ExtResource("2_37aom")
+inventory_interface = NodePath("UI/InventoryInterface")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
@@ -77,8 +78,19 @@ bus = &"Ambience"
 script = ExtResource("7_jb10p")
 player = NodePath("..")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI"]
+[node name="InventoryInterface" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_k8wke")
+
+[node name="MainStuff" type="MarginContainer" parent="UI/InventoryInterface"]
+unique_name_in_owner = true
 texture_filter = 1
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -86,16 +98,16 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("5_t6gbb")
 
-[node name="ToolbarArea" type="VBoxContainer" parent="UI/MarginContainer"]
+[node name="ToolbarArea" type="VBoxContainer" parent="UI/InventoryInterface/MainStuff"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/ToolbarArea"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/InventoryInterface/MainStuff/ToolbarArea"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Healthbar" type="TextureProgressBar" parent="UI/MarginContainer/ToolbarArea/HBoxContainer"]
+[node name="Healthbar" type="TextureProgressBar" parent="UI/InventoryInterface/MainStuff/ToolbarArea/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 16)
 layout_mode = 2
@@ -113,7 +125,7 @@ texture_progress = ExtResource("11_klbso")
 tint_under = Color(0, 0, 0, 0.490196)
 tint_progress = Color(0.552941, 0.737255, 0.270588, 1)
 
-[node name="HealthBarNumber" type="Label" parent="UI/MarginContainer/ToolbarArea/HBoxContainer/Healthbar"]
+[node name="HealthBarNumber" type="Label" parent="UI/InventoryInterface/MainStuff/ToolbarArea/HBoxContainer/Healthbar"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 10
@@ -123,14 +135,15 @@ grow_horizontal = 2
 text = "100"
 horizontal_alignment = 1
 
-[node name="Toolbar" type="HBoxContainer" parent="UI/MarginContainer/ToolbarArea"]
+[node name="Toolbar" type="HBoxContainer" parent="UI/InventoryInterface/MainStuff/ToolbarArea"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 theme_override_constants/separation = -1
+script = ExtResource("8_0h4bp")
 
-[node name="Crosshair" type="TextureRect" parent="UI/MarginContainer"]
+[node name="Crosshair" type="TextureRect" parent="UI/InventoryInterface/MainStuff"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
@@ -139,13 +152,14 @@ size_flags_vertical = 4
 texture = ExtResource("3_j7ilq")
 expand_mode = 1
 
-[node name="InteractPrompt" type="MarginContainer" parent="UI/MarginContainer"]
+[node name="InteractPrompt" type="MarginContainer" parent="UI/InventoryInterface/MainStuff"]
+unique_name_in_owner = true
 visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="NinePatchRect" type="NinePatchRect" parent="UI/MarginContainer/InteractPrompt"]
+[node name="NinePatchRect" type="NinePatchRect" parent="UI/InventoryInterface/MainStuff/InteractPrompt"]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("8_4p1wd")
@@ -154,40 +168,40 @@ patch_margin_top = 2
 patch_margin_right = 2
 patch_margin_bottom = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/InteractPrompt"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/InventoryInterface/MainStuff/InteractPrompt"]
 layout_mode = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="hboxau" type="HBoxContainer" parent="UI/MarginContainer/InteractPrompt/MarginContainer"]
+[node name="hboxau" type="HBoxContainer" parent="UI/InventoryInterface/MainStuff/InteractPrompt/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Label" type="RichTextLabel" parent="UI/MarginContainer/InteractPrompt/MarginContainer/hboxau"]
+[node name="Label" type="RichTextLabel" parent="UI/InventoryInterface/MainStuff/InteractPrompt/MarginContainer/hboxau"]
 layout_mode = 2
 bbcode_enabled = true
 text = "Press [color=light_blue] F [/color] to interact..."
 fit_content = true
 autowrap_mode = 0
 
-[node name="DarkenBackground" type="TextureRect" parent="UI/MarginContainer"]
+[node name="DarkenBackground" type="TextureRect" parent="UI/InventoryInterface/MainStuff"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 texture = SubResource("GradientTexture1D_ol2qu")
 
-[node name="MainInventory" type="MarginContainer" parent="UI/MarginContainer"]
+[node name="MainInventory" type="MarginContainer" parent="UI/InventoryInterface/MainStuff"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+script = ExtResource("9_ergft")
 
-[node name="Background" type="NinePatchRect" parent="UI/MarginContainer/MainInventory"]
-visible = false
+[node name="Background" type="NinePatchRect" parent="UI/InventoryInterface/MainStuff/MainInventory"]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 texture = ExtResource("8_uyng6")
@@ -196,22 +210,22 @@ patch_margin_top = 2
 patch_margin_right = 2
 patch_margin_bottom = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/MainInventory"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/InventoryInterface/MainStuff/MainInventory"]
 layout_mode = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="MenuHorizontalContainer" type="HBoxContainer" parent="UI/MarginContainer/MainInventory/MarginContainer"]
+[node name="MenuHorizontalContainer" type="HBoxContainer" parent="UI/InventoryInterface/MainStuff/MainInventory/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="CraftingMargin" type="MarginContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer"]
+[node name="CraftingMargin" type="MarginContainer" parent="UI/InventoryInterface/MainStuff/MainInventory/MarginContainer/MenuHorizontalContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Background" type="NinePatchRect" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin"]
+[node name="Background" type="NinePatchRect" parent="UI/InventoryInterface/MainStuff/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("8_uyng6")
@@ -220,91 +234,37 @@ patch_margin_top = 2
 patch_margin_right = 2
 patch_margin_bottom = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/InventoryInterface/MainStuff/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin"]
 layout_mode = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="Crafting" type="VBoxContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer"]
+[node name="Crafting" type="VBoxContainer" parent="UI/InventoryInterface/MainStuff/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer"]
 layout_mode = 2
 
-[node name="LineEdit" type="LineEdit" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting"]
+[node name="LineEdit" type="LineEdit" parent="UI/InventoryInterface/MainStuff/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting"]
 layout_mode = 2
 placeholder_text = "Search recipes..."
 alignment = 1
 context_menu_enabled = false
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/InventoryInterface/MainStuff/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting"]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer"]
+[node name="GridContainer" type="GridContainer" parent="UI/InventoryInterface/MainStuff/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer"]
 layout_mode = 2
-size_flags_vertical = 3
+columns = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="ItemSlot" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource("12_4e11v")]
-layout_mode = 2
-
-[node name="ItemSlot2" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource("12_4e11v")]
-layout_mode = 2
-
-[node name="ItemSlot3" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource("12_4e11v")]
-layout_mode = 2
-
-[node name="ItemSlot4" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource("12_4e11v")]
-layout_mode = 2
-
-[node name="ItemSlot5" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource("12_4e11v")]
-layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="ItemSlot" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("12_4e11v")]
-layout_mode = 2
-
-[node name="ItemSlot2" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("12_4e11v")]
-layout_mode = 2
-
-[node name="ItemSlot3" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("12_4e11v")]
-layout_mode = 2
-
-[node name="ItemSlot4" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("12_4e11v")]
-layout_mode = 2
-
-[node name="ItemSlot5" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("12_4e11v")]
-layout_mode = 2
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="ItemSlot" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("12_4e11v")]
-layout_mode = 2
-
-[node name="ItemSlot2" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("12_4e11v")]
-layout_mode = 2
-
-[node name="ItemSlot3" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("12_4e11v")]
-layout_mode = 2
-
-[node name="ItemSlot4" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("12_4e11v")]
-layout_mode = 2
-
-[node name="ItemSlot5" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/CraftingMargin/MarginContainer/Crafting/ScrollContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("12_4e11v")]
-layout_mode = 2
-
-[node name="InventoryMargin" type="MarginContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer"]
+[node name="InventoryMargin" type="MarginContainer" parent="UI/InventoryInterface/MainStuff/MainInventory/MarginContainer/MenuHorizontalContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Background" type="NinePatchRect" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin"]
+[node name="Background" type="NinePatchRect" parent="UI/InventoryInterface/MainStuff/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("8_uyng6")
@@ -313,36 +273,57 @@ patch_margin_top = 2
 patch_margin_right = 2
 patch_margin_bottom = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/InventoryInterface/MainStuff/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin"]
 layout_mode = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin/MarginContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="UI/InventoryInterface/MainStuff/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin/MarginContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin/MarginContainer/VBoxContainer2"]
+[node name="Label" type="Label" parent="UI/InventoryInterface/MainStuff/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 text = "Inventory"
 label_settings = SubResource("LabelSettings_655vd")
 horizontal_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin/MarginContainer/VBoxContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/InventoryInterface/MainStuff/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="SlotsContainer" type="VBoxContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin/MarginContainer/VBoxContainer2/VBoxContainer"]
+[node name="SlotsContainer" type="VBoxContainer" parent="UI/InventoryInterface/MainStuff/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin/MarginContainer/VBoxContainer2/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="ToolbarSlotsContainer" type="VBoxContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin/MarginContainer/VBoxContainer2/VBoxContainer"]
+[node name="ItemGrid" type="GridContainer" parent="UI/InventoryInterface/MainStuff/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin/MarginContainer/VBoxContainer2/VBoxContainer/SlotsContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 9
 
-[node name="MarginContainer3" type="MarginContainer" parent="UI/MarginContainer/MainInventory/MarginContainer/MenuHorizontalContainer"]
+[node name="ToolbarSlotsContainer" type="VBoxContainer" parent="UI/InventoryInterface/MainStuff/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin/MarginContainer/VBoxContainer2/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 10
+
+[node name="ToolbarItemGrid" type="GridContainer" parent="UI/InventoryInterface/MainStuff/MainInventory/MarginContainer/MenuHorizontalContainer/InventoryMargin/MarginContainer/VBoxContainer2/VBoxContainer/ToolbarSlotsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 9
+
+[node name="MarginContainer3" type="MarginContainer" parent="UI/InventoryInterface/MainStuff/MainInventory/MarginContainer/MenuHorizontalContainer"]
+layout_mode = 2
+
+[node name="GrabbedSlot" parent="UI/InventoryInterface" instance=ExtResource("12_1tw2e")]
+visible = false
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
 
 [node name="PCMenu" parent="UI" instance=ExtResource("10_mm3p5")]
 visible = false
@@ -387,5 +368,12 @@ text = "Back to Main Menu"
 layout_mode = 2
 text = "Exit game"
 
+[node name="Tooltip" parent="UI" instance=ExtResource("11_pqohr")]
+unique_name_in_owner = true
+visible = false
+
+[connection signal="drop_slot_data" from="UI/InventoryInterface" to="." method="_on_inventory_interface_drop_slot_data"]
+[connection signal="gui_input" from="UI/InventoryInterface" to="UI/InventoryInterface" method="_on_gui_input"]
+[connection signal="visibility_changed" from="UI/InventoryInterface" to="UI/InventoryInterface" method="_on_visibility_changed"]
 [connection signal="pressed" from="UI/DeathMenu/VBoxContainer/Buttons/MainMenu" to="UI" method="_on_main_menu_pressed"]
 [connection signal="pressed" from="UI/DeathMenu/VBoxContainer/Buttons/ExitGame" to="UI" method="_on_exit_game_pressed"]

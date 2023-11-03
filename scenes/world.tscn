@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://d2eqichq2s0vl"]
+[gd_scene load_steps=29 format=3 uid="uid://d2eqichq2s0vl"]
 
 [ext_resource type="Script" path="res://source/world.gd" id="1_whit5"]
 [ext_resource type="ArrayMesh" uid="uid://cxg21ydocvx0t" path="res://data/meshes/natives_nikau.res" id="2_i4ajs"]
@@ -10,6 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://s0gnycogpfs0" path="res://scenes/player.tscn" id="5_ex6va"]
 [ext_resource type="Script" path="res://source/enemy_spawner.gd" id="7_c58ck"]
 [ext_resource type="PackedScene" uid="uid://bo7vkcnbk68pm" path="res://scenes/pc.tscn" id="10_dtci1"]
+[ext_resource type="PackedScene" uid="uid://bk0fasaji6quy" path="res://scenes/pick_up.tscn" id="11_gaupb"]
+[ext_resource type="Resource" uid="uid://gq6aa8dbtxph" path="res://data/items/ammunition/9x18.tres" id="12_if01x"]
+[ext_resource type="Script" path="res://source/inventory/slot_data.gd" id="13_8jpnl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_uxvhl"]
 sky_top_color = Color(0.168627, 0.337255, 0.603922, 1)
@@ -82,6 +85,11 @@ item_1 = SubResource("VoxelInstanceLibraryMultiMeshItem_fbwsw")
 item_2 = SubResource("VoxelInstanceLibraryMultiMeshItem_r4qq7")
 item_3 = SubResource("VoxelInstanceLibraryMultiMeshItem_v03of")
 
+[sub_resource type="Resource" id="Resource_2ey6v"]
+script = ExtResource("13_8jpnl")
+item_data = ExtResource("12_if01x")
+quantity = 41
+
 [node name="World" type="Node3D"]
 script = ExtResource("1_whit5")
 
@@ -113,3 +121,9 @@ player = NodePath("../Player")
 
 [node name="PC" parent="." instance=ExtResource("10_dtci1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 55, -7)
+
+[node name="PickUp" parent="." instance=ExtResource("11_gaupb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 58, -6)
+slot_data = SubResource("Resource_2ey6v")
+
+[connection signal="drop_slot_data" from="Player" to="." method="_on_player_drop_slot_data"]

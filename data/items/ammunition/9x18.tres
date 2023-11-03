@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AmmunitionData" load_steps=4 format=3 uid="uid://gq6aa8dbtxph"]
+
+[ext_resource type="PackedScene" uid="uid://ckxnjpif6eggb" path="res://scenes/player_arms/default.tscn" id="1_wp1cf"]
+[ext_resource type="Script" path="res://source/resources/ammunition_data.gd" id="2_rdkpf"]
+[ext_resource type="Texture2D" uid="uid://6c6ky6eviclc" path="res://data/textures/ui/icons/bullet_9x18.png" id="3_q5iup"]
+
+[resource]
+script = ExtResource("2_rdkpf")
+damage = 30
+name = "9x18mm"
+max_amount = 64
+texture = ExtResource("3_q5iup")
+hand_scene = ExtResource("1_wp1cf")
+description = "Fits into a Makarov."

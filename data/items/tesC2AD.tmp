@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="InventoryData" load_steps=8 format=3 uid="uid://d2y1ggy3x2eof"]
+
+[ext_resource type="Script" path="res://source/inventory/inventory_data.gd" id="1_wbjh0"]
+[ext_resource type="Resource" uid="uid://blmammo5xal8c" path="res://data/items/weapons/ak_47.tres" id="2_cdjap"]
+[ext_resource type="Script" path="res://source/inventory/slot_data.gd" id="2_lqcqv"]
+[ext_resource type="Resource" uid="uid://cwqr0ae7ruf7b" path="res://data/items/voxels/kauri_wood.tres" id="2_nd7ye"]
+
+[sub_resource type="Resource" id="Resource_7mshd"]
+script = ExtResource("2_lqcqv")
+item_data = ExtResource("2_cdjap")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_4q2k0"]
+script = ExtResource("2_lqcqv")
+item_data = ExtResource("2_nd7ye")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_alkuo"]
+script = ExtResource("2_lqcqv")
+quantity = 1
+
+[resource]
+script = ExtResource("1_wbjh0")
+slot_datas = Array[ExtResource("2_lqcqv")]([SubResource("Resource_7mshd"), null, SubResource("Resource_4q2k0"), null, null, null, null, SubResource("Resource_alkuo"), null, null, null, null, null, null, null, null, null, null])

@@ -6,6 +6,7 @@ signal update_ui
 signal inventory_toggled
 signal interact_pressed
 signal died
+signal drop_slot_data(slot_data: SlotData)
 
 const SPEED: float = 3.0
 const JUMP_VELOCITY: float = 9.0
@@ -15,8 +16,9 @@ var health: int = 100
 var is_in_menu: bool = false
 var is_pc_selectable: bool = false
 
-@export var inventory: Inventory
 @export var raycast: RayCast3D
+@export var inventory_data: InventoryData
+@export var inventory_interface: InventoryInterface
 
 @onready var camera: Camera3D = $CameraBase/Camera
 @onready var camera_base: Node3D = $CameraBase
@@ -27,15 +29,8 @@ var is_pc_selectable: bool = false
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	
-	inventory.add_item(ItemDatabase.new_item("9x18"))
-	inventory.add_item(ItemDatabase.new_item("7.62x39"))
-	inventory.add_item(ItemDatabase.new_item("9x18"))
-	inventory.add_item(ItemDatabase.new_item("ak_47"))
-	inventory.add_item(ItemDatabase.new_item("banana_mag"))
-	var cool_item: Item = ItemDatabase.new_item("7.62x39")
-	cool_item.current_amount = 72
-	inventory.add_item(cool_item)
+	inventory_interface.set_player_inventory_data(inventory_data)
+	inventory_interface.set_toolbar_inventory_data(inventory_data)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_inventory"):
@@ -58,6 +53,7 @@ func _input(event: InputEvent) -> void:
 		# Arm drag.
 		arms_base.position.x += -event.relative.x * 0.002
 		arms_base.position.y += event.relative.y * 0.002
+
 		
 
 func _process(delta: float) -> void:
@@ -128,3 +124,11 @@ func damage(amount: int) -> void:
 
 func _die():
 	died.emit()
+
+
+func _on_inventory_interface_drop_slot_data(slot_data) -> void:
+	drop_slot_data.emit(slot_data)
+
+func get_drop_position() -> Vector3:
+	var direction = -camera.global_transform.basis.z
+	return camera.global_position + direction
