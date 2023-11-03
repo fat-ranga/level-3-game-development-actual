@@ -15,8 +15,8 @@ name = "Banana Mag"
 max_amount = 1
 icon = ExtResource("1_l1rum")
 hand_scene = ExtResource("1_t2evj")
-tooltip_text = "An item."
-current_amount = 0
+tooltip_text = "Holds 7.62x39mm rounds."
+current_amount = 1
 
 [resource]
 script = ExtResource("1_j0wug")

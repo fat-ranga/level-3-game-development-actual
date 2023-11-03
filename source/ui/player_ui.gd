@@ -47,6 +47,11 @@ func _physics_process(delta: float) -> void:
 		interact_prompt.hide()
 		crosshair.show()
 
+func _process(delta: float) -> void:
+	if currently_held_icon == null:
+		return
+	currently_held_icon.global_position = get_viewport().get_mouse_position()
+
 func _update_ui() -> void:
 	healthbar.value = player.health
 	health_bar_number.text = str(healthbar.value)
@@ -106,6 +111,7 @@ func _generate_inventory_ui() -> void:
 		
 		for x in range(player.inventory.width):
 			var new_slot: ItemSlot = item_slot_scene.instantiate()
+			new_slot.icon_pressed.connect(_on_icon_pressed)
 			new_slot._item_icon.player_inventory = player.inventory
 			new_slot._item_icon.position_in_inventory = Vector2(x, y)
 			main_item_slots.append(new_slot)
@@ -119,6 +125,7 @@ func _generate_inventory_ui() -> void:
 	
 	for x in range(player.inventory.width):
 		var new_slot: ItemSlot = item_slot_scene.instantiate()
+		new_slot.icon_pressed.connect(_on_icon_pressed)
 		new_slot._item_icon.player_inventory = player.inventory
 		new_slot._item_icon.position_in_inventory = Vector2(x, player.inventory.height)
 		main_item_slots.append(new_slot)
@@ -127,6 +134,7 @@ func _generate_inventory_ui() -> void:
 	# Generate the main visible toolbar.
 	for x in range(player.inventory.width):
 		var new_slot: ItemSlot = item_slot_scene.instantiate()
+		new_slot.icon_pressed.connect(_on_icon_pressed)
 		new_slot._item_icon.player_inventory = player.inventory
 		new_slot._item_icon.position_in_inventory = Vector2(x, player.inventory.height)
 		toolbar_slots.append(new_slot)
@@ -134,6 +142,11 @@ func _generate_inventory_ui() -> void:
 		#var icon: Control = slot_icon_scene.instantiate()
 		#new_slot.add_child(icon)
 
+func _on_icon_pressed(icon: Icon) -> void:
+	if currently_held_icon:
+		currently_held_icon.is_following_mouse = false # Previous.
+	currently_held_icon = icon
+	currently_held_icon.is_following_mouse = true # New.
 
 func _on_main_menu_pressed() -> void:
 	main_menu_button_pressed.emit()

@@ -31,6 +31,8 @@ func _ready() -> void:
 	inventory.add_item(ItemDatabase.new_item("9x18"))
 	inventory.add_item(ItemDatabase.new_item("7.62x39"))
 	inventory.add_item(ItemDatabase.new_item("9x18"))
+	inventory.add_item(ItemDatabase.new_item("ak_47"))
+	inventory.add_item(ItemDatabase.new_item("banana_mag"))
 	var cool_item: Item = ItemDatabase.new_item("7.62x39")
 	cool_item.current_amount = 72
 	inventory.add_item(cool_item)

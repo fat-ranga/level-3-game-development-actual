@@ -1,18 +1,21 @@
-[gd_resource type="Resource" script_class="ItemDatabaseResource" load_steps=5 format=3 uid="uid://blmo1kjevhy1l"]
+[gd_resource type="Resource" script_class="DatabaseResource" load_steps=6 format=3 uid="uid://b6rj64wh2flbj"]
 
+[ext_resource type="PackedScene" uid="uid://ckxnjpif6eggb" path="res://scenes/player_arms/default.tscn" id="1_h7hco"]
+[ext_resource type="Script" path="res://source/resources/database_resource.gd" id="1_ldejc"]
 [ext_resource type="Texture2D" uid="uid://c45qxsed65xbs" path="res://data/textures/ui/icons/ak_47.png" id="1_ow4u4"]
-[ext_resource type="Script" path="res://source/resources/item_database_resource.gd" id="1_xty8f"]
 [ext_resource type="Script" path="res://source/resources/gun.gd" id="2_8ldmd"]
 
-[sub_resource type="Resource" id="Resource_7irpr"]
+[sub_resource type="Resource" id="Resource_30cxk"]
 script = ExtResource("2_8ldmd")
 id = &"ak_47"
 name = "AK-47"
-max_amount = 64
+max_amount = 1
 icon = ExtResource("1_ow4u4")
-tooltip_text = "An item."
-current_amount = 0
+hand_scene = ExtResource("1_h7hco")
+tooltip_text = "Avtomat Kalashnikova 1947."
+current_amount = 1
 
 [resource]
-script = ExtResource("1_xty8f")
-item_database = Array[Resource("res://source/resources/item.gd")]([SubResource("Resource_7irpr")])
+script = ExtResource("1_ldejc")
+item_database = Array[Resource("res://source/resources/item.gd")]([SubResource("Resource_30cxk")])
+recipe_database = Array[Resource("res://source/resources/recipe.gd")]([])
