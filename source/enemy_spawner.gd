@@ -28,6 +28,8 @@ func _spawn_enemies() -> void:
 
 func _update_enemies(delta: float) -> void:
 	for i in range(enemies.size()):
+		if enemies[i].is_dead:
+			continue
 		if enemies[i].health < 1:
 			enemies[i].animation_player.play("die")
 		else:

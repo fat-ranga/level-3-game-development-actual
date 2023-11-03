@@ -25,6 +25,7 @@ var is_pc_selectable: bool = false
 @onready var initial_camera_base_position: Vector3 = camera_base.position - position
 @onready var arms_base: Node3D = $CameraBase/Camera/ArmsBase
 @onready var ui: CanvasLayer = $UI
+@onready var animation_player: AnimationPlayer = $CameraBase/Camera/ArmsBase/fps_arms/AnimationPlayer
 
 
 func _ready() -> void:
@@ -42,6 +43,7 @@ func _input(event: InputEvent) -> void:
 		damage(7)
 	if event.is_action_pressed("interact"):
 		interact_pressed.emit()
+	
 		
 	if is_in_menu:
 		return
@@ -67,6 +69,13 @@ func _process(delta: float) -> void:
 		camera.fov = lerp(camera.fov, 50.0, delta * 15.0)
 	else:
 		camera.fov = lerp(camera.fov, 90.0, delta * 15.0)
+	
+	if Input.is_action_pressed("fire") and not is_in_menu:
+		animation_player.play("punch")
+		var hit = raycast.get_collider()
+		if hit:
+			if hit.is_in_group("enemy"):
+				hit.damage(randi_range(19, 38))
 	
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -132,3 +141,7 @@ func _on_inventory_interface_drop_slot_data(slot_data) -> void:
 func get_drop_position() -> Vector3:
 	var direction = -camera.global_transform.basis.z
 	return camera.global_position + direction
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	animation_player.play("idle")
