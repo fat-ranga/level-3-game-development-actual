@@ -141,14 +141,14 @@ layout_mode = 2
 toggle_mode = true
 action_mode = 0
 button_group = SubResource("ButtonGroup_vnyq6")
-text = "ranga au"
+text = "Save 1"
 
 [node name="Button2" type="Button" parent="WorldSelect/Area/MarginContainer/Worlds"]
 layout_mode = 2
 toggle_mode = true
 action_mode = 0
 button_group = SubResource("ButtonGroup_vnyq6")
-text = "ranga au"
+text = "Save 2"
 
 [node name="Footer" type="MarginContainer" parent="WorldSelect"]
 layout_mode = 2

@@ -32,7 +32,7 @@ width = 8
 [sub_resource type="LabelSettings" id="LabelSettings_655vd"]
 font_color = Color(0.65098, 0.65098, 0.65098, 1)
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("inventory", "raycast")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("inventory", "raycast") groups=["Player"]]
 collision_layer = 2
 collision_mask = 15
 wall_min_slide_angle = 0.0
@@ -346,3 +346,46 @@ layout_mode = 2
 
 [node name="PCMenu" parent="UI" instance=ExtResource("10_mm3p5")]
 visible = false
+
+[node name="DeathMenu" type="MarginContainer" parent="UI"]
+visible = false
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_t6gbb")
+
+[node name="ColorRect" type="ColorRect" parent="UI/DeathMenu"]
+layout_mode = 2
+color = Color(0.968627, 0.00784314, 0, 0.286275)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/DeathMenu"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 35
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/DeathMenu/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/DeathMenu/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "You died!"
+
+[node name="Buttons" type="VBoxContainer" parent="UI/DeathMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="MainMenu" type="Button" parent="UI/DeathMenu/VBoxContainer/Buttons"]
+layout_mode = 2
+text = "Back to Main Menu"
+
+[node name="ExitGame" type="Button" parent="UI/DeathMenu/VBoxContainer/Buttons"]
+layout_mode = 2
+text = "Exit game"
+
+[connection signal="pressed" from="UI/DeathMenu/VBoxContainer/Buttons/MainMenu" to="UI" method="_on_main_menu_pressed"]
+[connection signal="pressed" from="UI/DeathMenu/VBoxContainer/Buttons/ExitGame" to="UI" method="_on_exit_game_pressed"]

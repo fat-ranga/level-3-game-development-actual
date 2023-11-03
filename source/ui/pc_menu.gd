@@ -15,16 +15,6 @@ const passport_password: String = "aus_au1234"
 @onready var password_edit: LineEdit = $MarginContainer/MarginContainer/VBoxContainer/Password/PasswordEdit
 @onready var error: RichTextLabel = $MarginContainer/MarginContainer/VBoxContainer/Error
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-
 func _on_email_edit_text_submitted(new_text: String) -> void:
 	if not password_edit.text:
 		error.text = "[color=salmon] ! Enter password as well!"

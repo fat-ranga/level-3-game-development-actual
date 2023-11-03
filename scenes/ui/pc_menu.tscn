@@ -124,6 +124,7 @@ text = "The nuke fails and Aotearoa gets destroyed by the Aussies."
 vertical_alignment = 1
 
 [node name="Ending2" type="TextureRect" parent="."]
+visible = false
 layout_mode = 2
 texture = ExtResource("6_itk3b")
 expand_mode = 2
@@ -146,7 +147,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 1
 theme_override_constants/shadow_outline_size = 1
-text = "The passport works, but you become enslaved by the Aussies and forced to work building their secret moonbase that they then use to invade Aotearoa."
+text = "The passport works, but you become enslaved by the Aussies and forced to work building their secret moonbase that they then use to invade Aotearoa again."
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2

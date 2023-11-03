@@ -16,7 +16,7 @@ func generate_texture_atlas_data(root_directory: String = Constants.TEXTURE_DIRE
 	# Convert it from an Image to a Texture2D for use in a StandardMaterial3D.
 	var texture_atlas: ImageTexture = ImageTexture.create_from_image(atlas_image)
 	
-	atlas_image.save_png(Constants.DIRECTORY_LOCAL_EXECUTABLE + "atlas_frfr.png")
+	atlas_image.save_png(Constants.DIRECTORY_LOCAL_EXECUTABLE + "texture_atlas.png")
 	
 	# Corresponds to the DataType enum.
 	return [texture_atlas, texture_ids, Vector2i(atlas_size_in_blocks, atlas_size_in_blocks)]
@@ -37,7 +37,8 @@ func _load_textures(paths: PackedStringArray) -> Array:
 		
 		
 		# Read the actual file.
-		var new_image: Image = Image.load_from_file(texture_path)
+		#var new_image: Image = Image.load_from_file(texture_path)
+		var new_image: Image = load(texture_path).get_image()
 		#var new_image = .load(texture_path)
 		var image_size = new_image.get_size()
 		

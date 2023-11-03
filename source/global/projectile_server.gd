@@ -32,6 +32,8 @@ func _update_projectiles(delta) -> void:
 		var result: Dictionary = space_state.intersect_ray(query_parameters)
 		if result:
 			var entity = result.collider
+			if entity.is_in_group("Player"):
+				entity.damage(randi_range(7, 18))
 			projectiles[i].queue_free()
 			projectiles.remove_at(i)
 			return

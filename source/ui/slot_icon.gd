@@ -22,7 +22,7 @@ func set_current_amount(amount: int) -> void:
 
 func _on_mouse_entered() -> void:
 	new_tooltip = tooltip_scene.instantiate()
-	var tooltip_text_fr: String
+	var tooltip_text_fr: String = ""
 	var current_item: Item = player_inventory.get_item(position_in_inventory)
 	tooltip_text_fr += current_item.name
 	

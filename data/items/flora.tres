@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="ItemDatabaseResource" load_steps=9 format=3 uid="uid://bd8ocw4pemp88"]
+[gd_resource type="Resource" script_class="DatabaseResource" load_steps=10 format=3 uid="uid://bd8ocw4pemp88"]
 
-[ext_resource type="Script" path="res://source/resources/item_database_resource.gd" id="1_26h6j"]
+[ext_resource type="Script" path="res://source/resources/database_resource.gd" id="1_26h6j"]
+[ext_resource type="PackedScene" uid="uid://ckxnjpif6eggb" path="res://scenes/player_arms/default.tscn" id="1_b34we"]
 [ext_resource type="Texture2D" uid="uid://dp2bs1vyjh8l" path="res://data/textures/ui/icons/ponga_fern.png" id="1_o3t64"]
 [ext_resource type="Script" path="res://source/resources/item.gd" id="2_52os5"]
 [ext_resource type="Texture2D" uid="uid://bow40ahr8t4i1" path="res://data/textures/ui/icons/kauri_leaves.png" id="3_e1y62"]
@@ -12,6 +13,7 @@ id = &"ponga_fern"
 name = "Ponga Fern"
 max_amount = 64
 icon = ExtResource("1_o3t64")
+hand_scene = ExtResource("1_b34we")
 tooltip_text = "Ponga refers specifically to the silver fern, whereas punga is a more general term."
 current_amount = 1
 
@@ -21,6 +23,7 @@ id = &"kauri_leaves"
 name = "Kauri Leaves"
 max_amount = 64
 icon = ExtResource("3_e1y62")
+hand_scene = ExtResource("1_b34we")
 tooltip_text = ""
 current_amount = 1
 
@@ -30,9 +33,11 @@ id = &"nikau_wood"
 name = "Nikau Wood"
 max_amount = 64
 icon = ExtResource("4_4x6y7")
+hand_scene = ExtResource("1_b34we")
 tooltip_text = ""
 current_amount = 1
 
 [resource]
 script = ExtResource("1_26h6j")
 item_database = Array[ExtResource("2_52os5")]([SubResource("Resource_73y30"), SubResource("Resource_32gj5"), SubResource("Resource_ybej8")])
+recipe_database = Array[Resource("res://source/resources/recipe.gd")]([])

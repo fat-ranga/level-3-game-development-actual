@@ -29,8 +29,6 @@ func _ready() -> void:
 	for world in world_buttons.get_children():
 		world.focus_entered.connect(_world_selected)
 		world.focus_exited.connect(_world_deselected)
-		
-		world.toggled.connect(_world_toggled)
 	
 	for button in world_select_footer_buttons.get_children():
 		button.focus_entered.connect(_world_footer_button_selected)
@@ -77,12 +75,6 @@ func _on_back_pressed() -> void:
 	settings_menu.hide()
 	world_select.hide()
 	buttons.show()
-
-
-# WORLD SELECTION TODO: probably still some issue with toggles
-func _world_toggled(button_pressed: bool) -> void:
-	return
-	print(button_pressed)
 
 func _world_selected() -> void:
 	play_selected_world.disabled = false

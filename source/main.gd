@@ -28,8 +28,13 @@ func _input(event: InputEvent) -> void:
 func _start_game() -> void:
 	var world_scene: PackedScene = load(WORLD_SCENE_PATH)
 	world = world_scene.instantiate()
+	world.main_menu_button_pressed.connect(_back_to_main_menu)
 	world.texture_atlas = texture_atlas_data[TextureAtlasPacker.DataType.TEXTURE]
 	world.texture_ids = texture_atlas_data[TextureAtlasPacker.DataType.TEXTURE_IDS]
 	world.atlas_size_in_tiles = texture_atlas_data[TextureAtlasPacker.DataType.ATLAS_SIZE_IN_TILES]
 	add_child(world)
 	main_menu.hide()
+
+func _back_to_main_menu() -> void:
+	world.queue_free()
+	main_menu.show()

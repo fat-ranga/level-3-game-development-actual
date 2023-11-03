@@ -2,6 +2,8 @@ extends Node3D
 
 class_name World
 
+signal main_menu_button_pressed
+
 # Passed from Main.
 var texture_atlas: ImageTexture
 var texture_ids: Dictionary
@@ -15,6 +17,8 @@ var atlas_size_in_tiles: Vector2i
 @onready var voxel_library: VoxelBlockyLibrary = load("res://data/voxel_block_library.tres")
 
 func _ready() -> void:
+	player.ui.main_menu_button_pressed.connect(_on_main_menu_button_pressed)
+	
 	voxel_library.models[1].set_atlas_size_in_tiles(atlas_size_in_tiles)
 	
 	var mesher: VoxelMesherBlocky = VoxelMesherBlocky.new()
@@ -26,3 +30,6 @@ func _ready() -> void:
 	var australian: Australian = australian_scene.instantiate()
 	australian.position = player.position + Vector3(0, 10, 5)
 	add_child(australian)
+
+func _on_main_menu_button_pressed() -> void:
+	main_menu_button_pressed.emit()

@@ -9,7 +9,7 @@ signal back_button_pressed
 
 func _on_h_slider_value_changed(value: float) -> void:
 	ui_scale_number.text = str(value)
-	Settings.ui_scale = value
+	Settings.ui_scale = int(value)
 
 func _on_apply_pressed() -> void:
 	Settings.update()

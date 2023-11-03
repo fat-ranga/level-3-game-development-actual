@@ -5,6 +5,7 @@ class_name Player
 signal update_ui
 signal inventory_toggled
 signal interact_pressed
+signal died
 
 const SPEED: float = 3.0
 const JUMP_VELOCITY: float = 9.0
@@ -95,7 +96,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
-	var direction: Vector3
+	var direction: Vector3 = Vector3.ZERO
 	
 	if Input.is_action_pressed("move_forwards"):
 		direction += Vector3(-sin(camera_base.global_rotation.y), 0.0, -cos(camera_base.global_rotation.y))
@@ -124,4 +125,4 @@ func damage(amount: int) -> void:
 	update_ui.emit()
 
 func _die():
-	print("nahh dead au!")
+	died.emit()
