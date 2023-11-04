@@ -104,6 +104,7 @@ shadow_enabled = true
 generator = ExtResource("2_vi4jq")
 mesher = SubResource("VoxelMesherBlocky_3qibb")
 bounds = AABB(-8192, 0, -8192, 16384, 256, 16384)
+max_view_distance = 256
 collision_mask = 7
 material_override = SubResource("StandardMaterial3D_as4ia")
 mesh_block_size = 32

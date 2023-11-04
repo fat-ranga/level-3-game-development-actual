@@ -87,6 +87,7 @@ func _physics_process(delta: float) -> void:
 	if is_in_menu:
 		velocity.x *= 0.7
 		velocity.z *= 0.7
+		velocity.y = clamp(velocity.y, -30, 500)
 		move_and_slide()
 		return
 	
@@ -119,6 +120,8 @@ func _physics_process(delta: float) -> void:
 	
 	velocity.x *= 0.7
 	velocity.z *= 0.7
+	
+	velocity.y = clamp(velocity.y, -30, 500)
 	
 	move_and_slide()
 

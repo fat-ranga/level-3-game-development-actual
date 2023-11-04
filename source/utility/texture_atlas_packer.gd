@@ -28,8 +28,9 @@ func _load_textures(paths: PackedStringArray) -> Array:
 	
 	for texture_path in paths:
 		var extension: String = texture_path.get_extension()
-		
-		if !extension == "png" and !extension == "PNG":
+		#if extension != "png" and extension != "PNG":
+		# Godot won't allow pngs to be exported externally, so we use the .import.
+		if extension != "import":
 			printerr("Atlas Packer: Texture not PNG: " + texture_path)
 			continue # Move on to the next texture_path.
 		
@@ -37,9 +38,9 @@ func _load_textures(paths: PackedStringArray) -> Array:
 		
 		
 		# Read the actual file.
-		#var new_image: Image = Image.load_from_file(texture_path)
-		var new_image: Image = load(texture_path).get_image()
-		#var new_image = .load(texture_path)
+		# This below works both in editor and exported.
+		var fixed_texture_path: String = texture_path.replace(".import", "")
+		var new_image: Image = load(fixed_texture_path).get_image()
 		var image_size = new_image.get_size()
 		
 		# Move on to the next texture_path if this image is the wrong size.
@@ -147,3 +148,8 @@ func _add_dir_contents(dir: DirAccess, files: PackedStringArray, directories: Pa
 		file_name = dir.get_next()
 	
 	dir.list_dir_end()
+
+static func image_load_no_warning(filepath: String) -> Image:
+	var image = Image.new()
+	image.load(ProjectSettings.globalize_path(filepath))
+	return image

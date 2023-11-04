@@ -22,6 +22,7 @@ const min_colour: Color = Color(0.722, 0.176, 0.169) # Red.
 #@onready var tooltip: MarginContainer = %Tooltip
 @onready var interact_prompt: MarginContainer = %InteractPrompt
 @onready var crosshair: TextureRect = %Crosshair
+@onready var grabbed_slot: Panel = $InventoryInterface/GrabbedSlot
 
 func _ready() -> void:
 	player.update_ui.connect(_update_ui)
@@ -46,6 +47,7 @@ func _update_ui() -> void:
 
 func _on_player_died() -> void:
 	main_stuff.hide()
+	grabbed_slot.hide()
 	death_menu.show()
 	player.is_in_menu = true
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

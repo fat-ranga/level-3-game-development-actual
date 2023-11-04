@@ -13,7 +13,7 @@ var grabbed_slot_data: SlotData
 
 func _physics_process(delta: float) -> void:
 	if grabbed_slot.visible:
-		grabbed_slot.global_position = get_global_mouse_position() + Vector2(5, 5)
+		grabbed_slot.global_position = get_global_mouse_position() + Vector2(2, 2)
 
 func set_player_inventory_data(inventory_data: InventoryData) -> void:
 	inventory_data.inventory_interact.connect(on_inventory_interact)
