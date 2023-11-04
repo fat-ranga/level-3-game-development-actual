@@ -1,2 +1,7 @@
-# level-3-game-development-actual
- 2023.
+# Level 3 Game Development Project
+By Kael Robertson, 2023.
+Made with Godot using Zylann's voxel module: https://github.com/Zylann/godot_voxel
+
+All scripts are in the source folder.
+
+Link to testing video: https://www.youtube.com/watch?v=xifR2EySnVQ
